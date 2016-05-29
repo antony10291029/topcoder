@@ -1,40 +1,37 @@
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 public class Solution {
     public Solution() {
     }
 
-    public int[] intersect(int[] nums1, int[] nums2) {
-        Arrays.sort(nums1);
-        Arrays.sort(nums2);
-        List<Integer> res = new ArrayList<Integer>();
-        for (int i = 0, j = 0; i < nums1.length && j < nums2.length;) {
-            if (nums1[i] == nums2[j]) {
-                res.add(nums1[i]);
-                ++i;
-                ++j;
-            } else if (nums1[i] < nums2[j]) {
-                ++i;
+    public int search(int[] nums, int target) {
+        int left = 0, right = nums.length - 1;
+        for (int i = 0; i < 65; ++i) {
+            int mid = (left + right) / 2;
+            if (nums[left] == target || nums[right] == target || nums[mid] == target) {
+                return nums[left] == target ? left : (nums[right] == target ? right : mid);
+            }
+            if (nums[left] < nums[mid]) {
+                if (target > nums[left] && target < nums[mid]) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
             } else {
-                ++j;
+                if (target > nums[left] || target < nums[mid]) {
+                    right = mid;
+                } else {
+                    left = mid;
+                }
             }
         }
-        int[] tmp = new int[res.size()];
-        int cnt = 0;
-        for (Integer t:res) {
-            tmp[cnt] = res.get(cnt);
-            cnt++;
-        }
-        System.out.println(Arrays.deepToString(res.toArray()));
-        return tmp;
+        return -1;
+
     }
 
     public void main() {
-        int[] nums = new int[] { 3, 1, 1, 2, 2, 1 };
+        int[] nums = new int[] { 2, 4, 5, 1 };
         int k = 2;
-        System.out.println(new Solution().intersect(nums, nums));
+        System.out.println(new Solution().search(nums, 1));
     }
 
     public static void main(String[] args) {
