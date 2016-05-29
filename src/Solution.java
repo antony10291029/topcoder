@@ -1,52 +1,40 @@
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Comparator;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class Solution {
-    private Map<Integer, Integer> mp = new HashMap<Integer, Integer>();
-
-    public List<Integer> topKFrequent(int[] nums, int k) {
-        mp.clear();
-        for (int i = 0; i < nums.length; ++i) {
-            if (mp.containsKey(nums[i])) {
-                mp.put(nums[i], mp.get(nums[i]) + 1);
-            } else {
-                mp.put(nums[i], 1);
-            }
-        }
-        Node[] st = new Node[mp.size()];
-        int cnt = 0;
-        for (Map.Entry<Integer, Integer> entry : mp.entrySet()) {
-            Node node = new Node();
-            node.num = entry.getKey();
-            node.times = entry.getValue();
-            st[cnt++] = node;
-        }
-        Arrays.sort(st, new Comparator<Node>() {
-            @Override
-            public int compare(Node o1, Node o2) {
-                return o1.times != o2.times ? o2.times - o1.times : o1.num - o2.num;
-            }
-        });
-        List<Integer> res = new ArrayList<Integer>();
-        for (int i = 0; i < cnt && i < k; ++i) {
-            res.add(st[i].num);
-        }
-        return res;
+    public Solution() {
     }
 
-    class Node {
-        public int num;
-        public int times;
+    public int[] intersect(int[] nums1, int[] nums2) {
+        Arrays.sort(nums1);
+        Arrays.sort(nums2);
+        List<Integer> res = new ArrayList<Integer>();
+        for (int i = 0, j = 0; i < nums1.length && j < nums2.length;) {
+            if (nums1[i] == nums2[j]) {
+                res.add(nums1[i]);
+                ++i;
+                ++j;
+            } else if (nums1[i] < nums2[j]) {
+                ++i;
+            } else {
+                ++j;
+            }
+        }
+        int[] tmp = new int[res.size()];
+        int cnt = 0;
+        for (Integer t:res) {
+            tmp[cnt] = res.get(cnt);
+            cnt++;
+        }
+        System.out.println(Arrays.deepToString(res.toArray()));
+        return tmp;
     }
 
     public void main() {
-        int[] nums = new int[] { 1, 1, 1, 2, 2, 3 };
+        int[] nums = new int[] { 3, 1, 1, 2, 2, 1 };
         int k = 2;
-        System.out.println(new Solution().topKFrequent(nums, k));
+        System.out.println(new Solution().intersect(nums, nums));
     }
 
     public static void main(String[] args) {
