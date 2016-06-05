@@ -3,35 +3,39 @@ public class Solution {
     public Solution() {
     }
 
-    public int search(int[] nums, int target) {
-        int left = 0, right = nums.length - 1;
-        for (int i = 0; i < 65; ++i) {
-            int mid = (left + right) / 2;
-            if (nums[left] == target || nums[right] == target || nums[mid] == target) {
-                return nums[left] == target ? left : (nums[right] == target ? right : mid);
-            }
-            if (nums[left] < nums[mid]) {
-                if (target > nums[left] && target < nums[mid]) {
-                    right = mid;
-                } else {
-                    left = mid;
-                }
-            } else {
-                if (target > nums[left] || target < nums[mid]) {
-                    right = mid;
-                } else {
-                    left = mid;
-                }
-            }
+    public String removeDuplicateLetters(String s) {
+        StringBuilder res = new StringBuilder();
+        int[] count = new int[256];
+        boolean[] vis = new boolean[256];
+        //step1:init
+        for (int i = 0; i < 256; ++i) {
+            count[i] = 0;
+            vis[i] = false;
         }
-        return -1;
-
+        //step2:count
+        for (char ch : s.toCharArray()) {
+            count[ch]++;
+        }
+        //step3:process
+        for (char ch : s.toCharArray()) {
+            --count[ch];
+            if (vis[ch]) {
+                continue;
+            }
+            while (res.length() > 0 && ch < res.charAt(res.length() - 1)
+                    && count[res.charAt(res.length() - 1)] > 0) {
+                vis[res.charAt(res.length() - 1)] = false;
+                res.deleteCharAt(res.length() - 1);
+            }
+            res.append(ch);
+            vis[ch] = true;
+        }
+        return res.toString();
     }
 
     public void main() {
-        int[] nums = new int[] { 2, 4, 5, 1 };
-        int k = 2;
-        System.out.println(new Solution().search(nums, 1));
+        String s = "bcabc";
+        System.out.println(new Solution().removeDuplicateLetters(s));
     }
 
     public static void main(String[] args) {
