@@ -33,7 +33,7 @@ public class Solution {
 
     public void main() {
         int[] nums = new int[] { 9, 6, 1, 8 };
-        System.out.println(new Solution().countSmaller(nums));
+        System.out.println(new Solution().getHint("111", "110"));
     }
 
     public static void main(String[] args) {
