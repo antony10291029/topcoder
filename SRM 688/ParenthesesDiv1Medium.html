@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder SRM 688 - 250: ParenthesesDiv1Easy</title>
+    <title>TopCoder SRM 688 - 500: ParenthesesDiv1Medium</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -215,8 +215,8 @@ li.testcase .data {
     <h1 class="heading">
         <span id='contest-name'>SRM 688</span>
         <span id='contest-division'>1</span>
-        <span id='problem-score'>250</span>
-        <span id='problem-name'>ParenthesesDiv1Easy</span>
+        <span id='problem-score'>500</span>
+        <span id='problem-name'>ParenthesesDiv1Medium</span>
     </h1>
 
     <hr />
@@ -235,31 +235,17 @@ li.testcase .data {
 Examples of correct parentheses sequences include &quot;&quot;, &quot;()&quot;, &quot;()()()&quot;, &quot;(()())&quot;, and &quot;(((())))&quot;.<br />
 <br />
 <br />
-You have a <type>String</type> <b>s</b>.
-You want to change it into a correct parentheses sequence.
+You are given a <type>String</type> <b>s</b>.
+You are also given <type>int[]</type>s <b>L</b> and <b>R</b>, each with the same number of elements.
+These encode a set of conditions.
+For each valid i, you have to satisfy the following condition:
+the substring of <b>s</b> that begins at the 0-based index <b>L</b>[i] and ends at the 0-based index <b>R</b>[i] must be a correct parentheses sequence.
 <br />
 <br />
 <br />
-You can only change the string using magic flips.
-In order to do a magic flip, you specify two 0-based indices L and R such that L &lt;= R.
-The operation modifies the characters on indices from L to R, inclusive.
-First, the order of these characters is reversed.
-Then, each character is toggled to the opposite one.
-That is, each '(' in the specified range changes to a ')' and vice versa.
-<br />
-<br />
-<br />
-For example, suppose you have the string &quot;((()&quot;.
-If you do a magic flip on the entire string (i.e., choosing L=0 and R=3), it first gets reversed to &quot;)(((&quot; and then all parentheses are toggled. Thus, flipping the string &quot;((()&quot; produces the string &quot;()))&quot;.
-<br />
-<br />
-<br />
-Given <b>s</b>, find and report any sequence of at most 10 magic flips that changes <b>s</b> into a correct parentheses sequence.
-If there is no such sequence of magic flips, return the <type>int[]</type> {-1}.
-If there are multiple such sequences, you may return any of them.
-In particular, you are not required to find the shortest possible sequence of flips.
-The returned <type>int[]</type> should contain 2*F elements, where F is the number of flips you want to perform: 
-for each flip, in order, first its L and then its R.</intro>
+You can only modify <b>s</b> in one way: in each step you can choose two characters of <b>s</b> and swap them.
+Return the minimal number of swaps needed to produce a string that satisfies all the given conditions.
+If it is impossible, return -1 instead.</intro>
         </div>
     </div>
     
@@ -271,30 +257,34 @@ for each flip, in order, first its L and then its R.</intro>
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>ParenthesesDiv1Easy</span>
+                    <span class='definition-value'>ParenthesesDiv1Medium</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>correct</span>
+                    <span class='definition-value'>minSwaps</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
                     <span class='definition-value'>
                     
-                        String
+                        string
+                    , 
+                        vector&lt;int&gt;
+                    , 
+                        vector&lt;int&gt;
                     
                     </span>
                 </li>
                 <li class="definition-line" id='returns-line'>
                     <span class='definition-name'>Returns</span>
                     <span class='definition-value'>
-                        int[]
+                        int
                     </span>
                 </li>
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        int[] correct(String s)
+                        int minSwaps(string s, vector&lt;int&gt; L, vector&lt;int&gt; R)
                     </span>
                 </li>
             </ul>
@@ -327,9 +317,15 @@ for each flip, in order, first its L and then its R.</intro>
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1"><b>s</b> will contain between 1 and 1,000 characters, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>s</b> will contain between 1 and 2,000 characters, inclusive.</user-constraint></li>
         
             <li><user-constraint escaped="1">Each character in <b>s</b> will be '(' or ')'.</user-constraint></li>
+        
+            <li><user-constraint escaped="1"><b>L</b> will contain between 1 and 2,000 elements, inclusive.</user-constraint></li>
+        
+            <li><user-constraint escaped="1"><b>L</b> and <b>R</b> will contain the same number of elements.</user-constraint></li>
+        
+            <li><user-constraint escaped="1">For each valid i, 0 &lt;= L[i] &lt;= R[i] &lt; |<b>s</b>|.</user-constraint></li>
         
         </ul>
     </div>
@@ -354,6 +350,24 @@ for each flip, in order, first its L and then its R.</intro>
                                 </span>
                             </li>
                         
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 0, 0, 0 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 1, 1, 1, 1 }
+                                
+                                </span>
+                            </li>
+                        
                         </ul>
                     </div>
                     <div class="testcase-output">
@@ -361,17 +375,17 @@ for each flip, in order, first its L and then its R.</intro>
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 0, 0, 1, 1 }
+                            1
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">The first flip has L=R=0.
-It changes the string to &quot;((&quot;.
-The second flip has L=R=1.
-It changes that string to &quot;()&quot;, which is a correct parentheses sequence.</div>
+                        <div class="testcase-comment">We have four identical conditions.
+Each of them tells us that the substring that begins at index 0 and ends at index 1 must be a correct parentheses sequence.
+We can satisfy all conditions by swapping <b>s</b>[0] with <b>s</b>[1].
+This swap produces the string &quot;()&quot;.</div>
                     </div>
                     
                
@@ -388,7 +402,25 @@ It changes that string to &quot;()&quot;, which is a correct parentheses sequenc
                                 <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    &quot;))))))((((((&quot;
+                                    &quot;(())&quot;
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 1, 3 }
                                 
                                 </span>
                             </li>
@@ -400,18 +432,15 @@ It changes that string to &quot;()&quot;, which is a correct parentheses sequenc
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 0, 5, 6, 11 }
+                            1
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">Here, the first flip changes the string to &quot;((((((((((((&quot; and then the second flip changes it to &quot;(((((())))))&quot;.<br />
-<br />
-Note that {0,0,1,1,2,2,...,11,11} is not a valid solution.
-This sequence of flips produces a correct parentheses sequence (by flipping each character separately).
-However, this sequence consists of 12 flips and we are only allowed to perform at most 10 flips.</div>
+                        <div class="testcase-comment">The only way to satisfy both conditions is to change <b>s</b> into &quot;()()&quot;.
+This can be done in 1 swap: by swapping <b>s</b>[1] with <b>s</b>[2].</div>
                     </div>
                     
                
@@ -428,7 +457,25 @@ However, this sequence consists of 12 flips and we are only allowed to perform a
                                 <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    &quot;))()())()&quot;
+                                    &quot;(((())&quot;
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 1, 3 }
                                 
                                 </span>
                             </li>
@@ -440,15 +487,14 @@ However, this sequence consists of 12 flips and we are only allowed to perform a
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { -1 }
+                            2
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">This <b>s</b> has length 9.
-There is no correct parentheses sequence of length 9, so there can be no good sequence of flips.</div>
+                        <div class="testcase-comment">This time we do swap(s[1],s[4]) and swap(s[3],s[5]).</div>
                     </div>
                     
                
@@ -465,7 +511,25 @@ There is no correct parentheses sequence of length 9, so there can be no good se
                                 <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    &quot;)()(((&quot;
+                                    &quot;(((((((((&quot;
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 1, 3 }
                                 
                                 </span>
                             </li>
@@ -477,7 +541,7 @@ There is no correct parentheses sequence of length 9, so there can be no good se
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 0, 0, 3, 3, 5, 5 }
+                            -1
                         
                         </span>
                     </div>
@@ -496,7 +560,25 @@ There is no correct parentheses sequence of length 9, so there can be no good se
                                 <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    &quot;()&quot;
+                                    &quot;()()()()&quot;
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 0, 0, 0, 2, 2, 2, 4, 4, 6 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 1, 3, 5, 7, 3, 5, 7, 5, 7, 7 }
                                 
                                 </span>
                             </li>
@@ -508,14 +590,58 @@ There is no correct parentheses sequence of length 9, so there can be no good se
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            {  }
+                            0
                         
                         </span>
                     </div>
                     
-                    <div class="testcase-annotation">
-                        <div class='tag'>note</div>
-                        <div class="testcase-comment">This time we don't need to do anything.</div>
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">s</span>
+                                <span class="value data">
+                                
+                                    &quot;)()(()()((())()()()()()()))(()())()()()(&quot;
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 3, 5, 17, 25, 35 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 12, 10, 30, 30, 38 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            3
+                        
+                        </span>
                     </div>
                     
                
