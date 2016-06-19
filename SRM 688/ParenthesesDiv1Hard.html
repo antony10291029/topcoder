@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder SRM 687 - 1000: AlienSkiSlopes</title>
+    <title>TopCoder SRM 688 - 1000: ParenthesesDiv1Hard</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -213,10 +213,10 @@ li.testcase .data {
 
 <body>
     <h1 class="heading">
-        <span id='contest-name'>SRM 687</span>
+        <span id='contest-name'>SRM 688</span>
         <span id='contest-division'>1</span>
         <span id='problem-score'>1000</span>
-        <span id='problem-name'>AlienSkiSlopes</span>
+        <span id='problem-name'>ParenthesesDiv1Hard</span>
     </h1>
 
     <hr />
@@ -225,67 +225,48 @@ li.testcase .data {
     <div class="section">
         <h2 class="section-title">Problem Statement</h2>
         <div class="problem-intro">
-            <intro escaped="1"><p>
-You have been transported into an alien universe.
-After some wandering around you have stumbled upon an alien ski resort.
-In front of you, you see n aliens waiting to ski.
-(Each alien is currently in a different location.)
-In addition, you see n destinations in the ski resort.
-Both the aliens and the destinations are numbered from 0 to n-1.
-</p>
+            <intro escaped="1">Correct parentheses sequences can be defined recursively as follows:
+<ul>
+<li>The empty string &quot;&quot; is a correct sequence.</li>
+<li>If &quot;X&quot; and &quot;Y&quot; are correct sequences, then &quot;XY&quot; (the concatenation of X and Y) is a correct sequence.</li>
+<li>If &quot;X&quot; is a correct sequence, then &quot;(X)&quot; is a correct sequence.</li>
+<li>Each correct parentheses sequence can be derived using the above rules.</li>
+</ul>
+Examples of correct parentheses sequences include &quot;&quot;, &quot;()&quot;, &quot;()()()&quot;, &quot;(()())&quot;, and &quot;(((())))&quot;.<br />
+<br />
+<br />
+We can define the depth and the cost of a correct parentheses sequence recursively as follows:
 
-<p>
-You are given a <type>int[]</type> <b>h</b> with n*n elements.
-For each i and j, <b>h</b>[i*n+j] is the height difference between alien i and destination j.
-All the given height differences are nonnegative integers, meaning that each alien is currently at least as high as each destination.
-Since this is a strange universe, the height differences can be arbitrary: it is not guaranteed that they can be realized in our own physical universe.
-</p>
+<ul>
+<li>The empty string &quot;&quot; has depth 0 and cost 0.</li>
+<li>Suppose that &quot;S&quot; = &quot;(A)&quot;, where A is a correct parentheses sequence. Then we have depth(S) = depth(A)+1 and cost(S) = cost(A) + depth(S)^2.</li>
+<li>Suppose that &quot;S&quot; = &quot;AB&quot;, where A and B are correct parentheses sequences. Then we have depth(S) = max(depth(A),depth(B)) and cost(S) = cost(A) + cost(B).</li>
+</ul>
 
-<p>
-Each alien will choose one of the destinations and ski there.
-The higher the height difference, the more fun will the alien have.
-As all aliens are greedy, each alien will always choose a destination that maximizes their own fun.
-If there are ties, the alien will be happy with any of the destinations that are tied for being the most fun.
-</p>
+For example:
+<ul>
+<li>The depth of &quot;(((())))&quot; is 4, the depth of &quot;()()()&quot; is 1, and the depth of &quot;(())()&quot; is 2.</li>
+<li>The cost of &quot;(((())))&quot; is 4^2 + 3^2 + 2^2 + 1^2 = 30, the cost of &quot;()()()&quot; is 1^2 + 1^2 + 1^2 = 3, and the cost of &quot;(())()&quot; is 6.</li>
+</ul>
 
-<p>
-A skiing accident may happen if two aliens choose the same destination.
-Sometimes it is possible to make sure there are no accidents by assigning a unique destination to each alien.
-However, note that the above rule takes precedence: no alien will compromise their own fun by choosing a suboptimal destination.
-Therefore, sometimes they have no way to avoid accidents.
-</p>
-
-<p>
-This is where you can help them.
-You just realized that in this universe you have been granted the power to raise the heights of destinations in an arbitrary way.
-Raising the height of the j-th destination will cause the height difference from all aliens to this destination to decrease by 1.
-</p>
-
-<p>
-After the changes, some height differences may become negative.
-This is allowed.
-However, note that an alien cannot ski to a destination that has a negative height difference.
-Therefore, after your changes the optimal destination for each alien must still have a nonnegative height difference.
-</p>
-
-<p>
-If you raise the heights of some destinations, you may change the set of optimal choices for some aliens.
-In this way, you may be able to produce a configuration in which it is possible to prevent all skiing accidents.
-(In other words, a configuration where the aliens can choose their destinations in such a way that no two aliens choose the same destination and each alien chooses one of the destinations that gives them the most fun.)
-</p>
-
-<p>
-You would like to use your powers to help make the aliens safe.
-If it is not possible to complete this task, return the <type>int[]</type> {-1}.
-Otherwise, return a <type>int[]</type> with exactly n elements:
-for each i, element i of the return value must be a nonnegative integer specifying the amount by which you raise the height of destination i.
-</p>
-
-<p>
-If there are multiple solutions, return any of them.
-Note that each of the returned amounts must fit into an <type>int</type>.
-(If there is a valid solution, there is always a valid solution with this property.)
-</p></intro>
+Note that the depth and the cost of each correct parentheses sequence is uniquely defined using the above rules.
+For example, when evaluating the depth and cost of &quot;()()()&quot; it does not matter whether we take X = &quot;()&quot; and Y = &quot;()()&quot; or we take X = &quot;()()&quot; and Y = &quot;()&quot;, the results will be the same in both cases.
+<br />
+<br />
+<br />
+You are given a <type>String</type> <b>s</b>.
+You are going to split <b>s</b> into two disjoint subsequences s1 and s2.
+(Each character of <b>s</b> must be used in exactly one of s1 and s2, and the original order of characters must be preserved in the new sequences.)
+<br />
+<br />
+<br />
+Your primary goal is to make sure that both s1 and s2 are correct parentheses sequences.
+If this goal cannot be achieved, return -1.
+<br />
+<br />
+<br />
+Your secondary goal is to make cost(s1) + cost(s2) as small as possible.
+Compute and return the smallest possible value of cost(s1) + cost(s2).</intro>
         </div>
     </div>
     
@@ -297,30 +278,30 @@ Note that each of the returned amounts must fit into an <type>int</type>.
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>AlienSkiSlopes</span>
+                    <span class='definition-value'>ParenthesesDiv1Hard</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>raise</span>
+                    <span class='definition-value'>minCost</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
                     <span class='definition-value'>
                     
-                        int[]
+                        String
                     
                     </span>
                 </li>
                 <li class="definition-line" id='returns-line'>
                     <span class='definition-name'>Returns</span>
                     <span class='definition-value'>
-                        int[]
+                        int
                     </span>
                 </li>
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        int[] raise(int[] h)
+                        int minCost(String s)
                     </span>
                 </li>
             </ul>
@@ -336,7 +317,7 @@ Note that each of the returned amounts must fit into an <type>int</type>.
             <ul class="limit-lines">
                 <li class='limit-line'>
                     <span class='limit-name'>Time limit (s)</span>
-                    <span class='limit-value'>2.000</span>
+                    <span class='limit-value'>4.000</span>
                 </li>
                 <li class='limit-line'>
                     <span class='limit-name'>Memory limit (MB)</span>
@@ -347,17 +328,25 @@ Note that each of the returned amounts must fit into an <type>int</type>.
     </div>
 
     
+    <!-- Notes -->
+    <div class="section">
+        <h2 class="section-title">Notes</h2>
+        <ul class="notes">
+        
+            <li><note escaped="1">Pay attention to the unusual time limit.</note></li>
+        
+        </ul>
+    </div>
+    
     
     <!-- Constraints -->
     <div class="section">
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1">n will be between 2 and 50 elements, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>s</b> will contain between 1 and 150 elements, inclusive.</user-constraint></li>
         
-            <li><user-constraint escaped="1"><b>h</b> will have exactly <b>n*n</b> elements.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">Each element of <b>h</b> will be between 0 and 10^9, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1">Each character in <b>s</b> will be '(' or ')'.</user-constraint></li>
         
         </ul>
     </div>
@@ -374,10 +363,10 @@ Note that each of the returned amounts must fit into an <type>int</type>.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1, 0, 0, 0, 1, 0, 0, 1, 0 }
+                                    &quot;(())&quot;
                                 
                                 </span>
                             </li>
@@ -389,38 +378,58 @@ Note that each of the returned amounts must fit into an <type>int</type>.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 1, 1, 0 }
+                            2
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment"><p>
-There are three aliens.
-In the current situation, alien 0 would choose destination 0 and aliens 1 and 2 would each choose destination 1.
-This is bad, because aliens 1 and 2 may have an accident.
-</p>
-
-<p>
-One possible way in which you can help them is to raise the heights of destinations 0 and 1 by one each.
-This will change the table of height differences to the following one:
-</p>
+                        <div class="testcase-comment">The optimal solution is to split <b>s</b> into s1 = s2 = &quot;()&quot;.
+(For example, s1 will be the characters at indices 0 and 2 and s2 will be the characters at indices 1 and 3.)
+For this split we have cost(s1) = cost(s2) = 1.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">s</span>
+                                <span class="value data">
+                                
+                                    &quot;((())())(()()())&quot;
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            11
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">One optimal solution is:
 <pre>
-{ 0,-1, 0,
- -1, 0, 0,
- -1, 0, 0}
+s  = ((())())(()()())
+s1 =   () ()  ()()() 
+s2 = ((  )  )(      )
 </pre>
-
-<p>
-After the change, alien 0 wants destination 0 or 2, and aliens 1 and 2 each want destination 1 or 2.
-This is a good situation because there is a safe set of choices.
-For example, alien 0 will choose destination 0, alien 1 will choose destination 2, and alien 2 will choose destination 1.
-</p>
-
-<p>
-Another correct answer is {0, 1, 0}: you only raise the height of destination 1 by one.
-</p></div>
+Cost(s1) = 5, Cost(s2) = 6.</div>
                     </div>
                     
                
@@ -434,10 +443,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3 }
+                                    &quot;())(()&quot;
                                 
                                 </span>
                             </li>
@@ -449,14 +458,14 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 2, 2, 2, 2 }
+                            -1
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">The answer of {0,0,0,0} will also be accepted. The aliens' safety is your only concern, the amount of fun they have does not matter to you.</div>
+                        <div class="testcase-comment">This <b>s</b> cannot be split into two correct sequences.</div>
                     </div>
                     
                
@@ -470,10 +479,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 91, 19, 50, 21, 56, 22, 96, 16, 30, 26, 85, 1, 87, 63, 31, 44, 25, 8, 94, 78, 46, 55, 88, 41, 52 }
+                                    &quot;(((((((((())))))))))&quot;
                                 
                                 </span>
                             </li>
@@ -485,7 +494,7 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 44, 13, 46, 22, 10 }
+                            110
                         
                         </span>
                     </div>
@@ -501,10 +510,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1000000000, 0, 0, 1000000000, 0, 0, 1000000000, 0, 0 }
+                                    &quot;()&quot;
                                 
                                 </span>
                             </li>
@@ -516,7 +525,7 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 1000000000, 0, 0 }
+                            1
                         
                         </span>
                     </div>
@@ -532,10 +541,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3 }
+                                    &quot;(((())()()()((((()))))(((())))()()()))(()(()))&quot;
                                 
                                 </span>
                             </li>
@@ -547,7 +556,7 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 1, 0, 1, 0, 1 }
+                            69
                         
                         </span>
                     </div>

@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder SRM 687 - 1000: AlienSkiSlopes</title>
+    <title>TopCoder SRM 688 - 250: ParenthesesDiv1Easy</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -213,10 +213,10 @@ li.testcase .data {
 
 <body>
     <h1 class="heading">
-        <span id='contest-name'>SRM 687</span>
+        <span id='contest-name'>SRM 688</span>
         <span id='contest-division'>1</span>
-        <span id='problem-score'>1000</span>
-        <span id='problem-name'>AlienSkiSlopes</span>
+        <span id='problem-score'>250</span>
+        <span id='problem-name'>ParenthesesDiv1Easy</span>
     </h1>
 
     <hr />
@@ -225,67 +225,41 @@ li.testcase .data {
     <div class="section">
         <h2 class="section-title">Problem Statement</h2>
         <div class="problem-intro">
-            <intro escaped="1"><p>
-You have been transported into an alien universe.
-After some wandering around you have stumbled upon an alien ski resort.
-In front of you, you see n aliens waiting to ski.
-(Each alien is currently in a different location.)
-In addition, you see n destinations in the ski resort.
-Both the aliens and the destinations are numbered from 0 to n-1.
-</p>
-
-<p>
-You are given a <type>int[]</type> <b>h</b> with n*n elements.
-For each i and j, <b>h</b>[i*n+j] is the height difference between alien i and destination j.
-All the given height differences are nonnegative integers, meaning that each alien is currently at least as high as each destination.
-Since this is a strange universe, the height differences can be arbitrary: it is not guaranteed that they can be realized in our own physical universe.
-</p>
-
-<p>
-Each alien will choose one of the destinations and ski there.
-The higher the height difference, the more fun will the alien have.
-As all aliens are greedy, each alien will always choose a destination that maximizes their own fun.
-If there are ties, the alien will be happy with any of the destinations that are tied for being the most fun.
-</p>
-
-<p>
-A skiing accident may happen if two aliens choose the same destination.
-Sometimes it is possible to make sure there are no accidents by assigning a unique destination to each alien.
-However, note that the above rule takes precedence: no alien will compromise their own fun by choosing a suboptimal destination.
-Therefore, sometimes they have no way to avoid accidents.
-</p>
-
-<p>
-This is where you can help them.
-You just realized that in this universe you have been granted the power to raise the heights of destinations in an arbitrary way.
-Raising the height of the j-th destination will cause the height difference from all aliens to this destination to decrease by 1.
-</p>
-
-<p>
-After the changes, some height differences may become negative.
-This is allowed.
-However, note that an alien cannot ski to a destination that has a negative height difference.
-Therefore, after your changes the optimal destination for each alien must still have a nonnegative height difference.
-</p>
-
-<p>
-If you raise the heights of some destinations, you may change the set of optimal choices for some aliens.
-In this way, you may be able to produce a configuration in which it is possible to prevent all skiing accidents.
-(In other words, a configuration where the aliens can choose their destinations in such a way that no two aliens choose the same destination and each alien chooses one of the destinations that gives them the most fun.)
-</p>
-
-<p>
-You would like to use your powers to help make the aliens safe.
-If it is not possible to complete this task, return the <type>int[]</type> {-1}.
-Otherwise, return a <type>int[]</type> with exactly n elements:
-for each i, element i of the return value must be a nonnegative integer specifying the amount by which you raise the height of destination i.
-</p>
-
-<p>
-If there are multiple solutions, return any of them.
-Note that each of the returned amounts must fit into an <type>int</type>.
-(If there is a valid solution, there is always a valid solution with this property.)
-</p></intro>
+            <intro escaped="1">Correct parentheses sequences can be defined recursively as follows:
+<ul>
+<li>The empty string &quot;&quot; is a correct sequence.</li>
+<li>If &quot;X&quot; and &quot;Y&quot; are correct sequences, then &quot;XY&quot; (the concatenation of X and Y) is a correct sequence.</li>
+<li>If &quot;X&quot; is a correct sequence, then &quot;(X)&quot; is a correct sequence.</li>
+<li>Each correct parentheses sequence can be derived using the above rules.</li>
+</ul>
+Examples of correct parentheses sequences include &quot;&quot;, &quot;()&quot;, &quot;()()()&quot;, &quot;(()())&quot;, and &quot;(((())))&quot;.<br />
+<br />
+<br />
+You have a <type>String</type> <b>s</b>.
+You want to change it into a correct parentheses sequence.
+<br />
+<br />
+<br />
+You can only change the string using magic flips.
+In order to do a magic flip, you specify two 0-based indices L and R such that L &lt;= R.
+The operation modifies the characters on indices from L to R, inclusive.
+First, the order of these characters is reversed.
+Then, each character is toggled to the opposite one.
+That is, each '(' in the specified range changes to a ')' and vice versa.
+<br />
+<br />
+<br />
+For example, suppose you have the string &quot;((()&quot;.
+If you do a magic flip on the entire string (i.e., choosing L=0 and R=3), it first gets reversed to &quot;)(((&quot; and then all parentheses are toggled. Thus, flipping the string &quot;((()&quot; produces the string &quot;()))&quot;.
+<br />
+<br />
+<br />
+Given <b>s</b>, find and report any sequence of at most 10 magic flips that changes <b>s</b> into a correct parentheses sequence.
+If there is no such sequence of magic flips, return the <type>int[]</type> {-1}.
+If there are multiple such sequences, you may return any of them.
+In particular, you are not required to find the shortest possible sequence of flips.
+The returned <type>int[]</type> should contain 2*F elements, where F is the number of flips you want to perform: 
+for each flip, in order, first its L and then its R.</intro>
         </div>
     </div>
     
@@ -297,17 +271,17 @@ Note that each of the returned amounts must fit into an <type>int</type>.
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>AlienSkiSlopes</span>
+                    <span class='definition-value'>ParenthesesDiv1Easy</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>raise</span>
+                    <span class='definition-value'>correct</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
                     <span class='definition-value'>
                     
-                        int[]
+                        String
                     
                     </span>
                 </li>
@@ -320,7 +294,7 @@ Note that each of the returned amounts must fit into an <type>int</type>.
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        int[] raise(int[] h)
+                        int[] correct(String s)
                     </span>
                 </li>
             </ul>
@@ -353,11 +327,9 @@ Note that each of the returned amounts must fit into an <type>int</type>.
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1">n will be between 2 and 50 elements, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>s</b> will contain between 1 and 1,000 characters, inclusive.</user-constraint></li>
         
-            <li><user-constraint escaped="1"><b>h</b> will have exactly <b>n*n</b> elements.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">Each element of <b>h</b> will be between 0 and 10^9, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1">Each character in <b>s</b> will be '(' or ')'.</user-constraint></li>
         
         </ul>
     </div>
@@ -374,10 +346,10 @@ Note that each of the returned amounts must fit into an <type>int</type>.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1, 0, 0, 0, 1, 0, 0, 1, 0 }
+                                    &quot;)(&quot;
                                 
                                 </span>
                             </li>
@@ -389,38 +361,17 @@ Note that each of the returned amounts must fit into an <type>int</type>.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 1, 1, 0 }
+                            { 0, 0, 1, 1 }
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment"><p>
-There are three aliens.
-In the current situation, alien 0 would choose destination 0 and aliens 1 and 2 would each choose destination 1.
-This is bad, because aliens 1 and 2 may have an accident.
-</p>
-
-<p>
-One possible way in which you can help them is to raise the heights of destinations 0 and 1 by one each.
-This will change the table of height differences to the following one:
-</p>
-<pre>
-{ 0,-1, 0,
- -1, 0, 0,
- -1, 0, 0}
-</pre>
-
-<p>
-After the change, alien 0 wants destination 0 or 2, and aliens 1 and 2 each want destination 1 or 2.
-This is a good situation because there is a safe set of choices.
-For example, alien 0 will choose destination 0, alien 1 will choose destination 2, and alien 2 will choose destination 1.
-</p>
-
-<p>
-Another correct answer is {0, 1, 0}: you only raise the height of destination 1 by one.
-</p></div>
+                        <div class="testcase-comment">The first flip has L=R=0.
+It changes the string to &quot;((&quot;.
+The second flip has L=R=1.
+It changes that string to &quot;()&quot;, which is a correct parentheses sequence.</div>
                     </div>
                     
                
@@ -434,10 +385,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1, 2, 3, 4, 2, 3, 4, 1, 3, 4, 1, 2, 4, 1, 2, 3 }
+                                    &quot;))))))((((((&quot;
                                 
                                 </span>
                             </li>
@@ -449,14 +400,18 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 2, 2, 2, 2 }
+                            { 0, 5, 6, 11 }
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">The answer of {0,0,0,0} will also be accepted. The aliens' safety is your only concern, the amount of fun they have does not matter to you.</div>
+                        <div class="testcase-comment">Here, the first flip changes the string to &quot;((((((((((((&quot; and then the second flip changes it to &quot;(((((())))))&quot;.<br />
+<br />
+Note that {0,0,1,1,2,2,...,11,11} is not a valid solution.
+This sequence of flips produces a correct parentheses sequence (by flipping each character separately).
+However, this sequence consists of 12 flips and we are only allowed to perform at most 10 flips.</div>
                     </div>
                     
                
@@ -470,10 +425,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 91, 19, 50, 21, 56, 22, 96, 16, 30, 26, 85, 1, 87, 63, 31, 44, 25, 8, 94, 78, 46, 55, 88, 41, 52 }
+                                    &quot;))()())()&quot;
                                 
                                 </span>
                             </li>
@@ -485,7 +440,44 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 44, 13, 46, 22, 10 }
+                            { -1 }
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">This <b>s</b> has length 9.
+There is no correct parentheses sequence of length 9, so there can be no good sequence of flips.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">s</span>
+                                <span class="value data">
+                                
+                                    &quot;)()(((&quot;
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            { 0, 0, 3, 3, 5, 5 }
                         
                         </span>
                     </div>
@@ -501,10 +493,10 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">h</span>
+                                <span class="name data">s</span>
                                 <span class="value data">
                                 
-                                    { 1000000000, 0, 0, 1000000000, 0, 0, 1000000000, 0, 0 }
+                                    &quot;()&quot;
                                 
                                 </span>
                             </li>
@@ -516,40 +508,14 @@ Another correct answer is {0, 1, 0}: you only raise the height of destination 1 
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            { 1000000000, 0, 0 }
+                            {  }
                         
                         </span>
                     </div>
                     
-               
-                </div>
-            </li>
-            
-            <li class="testcase">
-                <div class="testcase-content">
-                    <div class="testcase-input">
-                        <div class='tag'>input</div>
-                        <ul class="variables">
-                        
-                            <li class="variable data">
-                                <span class="name data">h</span>
-                                <span class="value data">
-                                
-                                    { 3, 1, 4, 1, 5, 9, 2, 6, 5, 3, 5, 8, 9, 7, 9, 3, 2, 3, 8, 4, 6, 2, 6, 4, 3 }
-                                
-                                </span>
-                            </li>
-                        
-                        </ul>
-                    </div>
-                    <div class="testcase-output">
-                        <div class='tag'>output</div>
-                        <span class="prefix data">Returns</span>
-                        <span class="value data">
-                        
-                            { 1, 0, 1, 0, 1 }
-                        
-                        </span>
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">This time we don't need to do anything.</div>
                     </div>
                     
                
