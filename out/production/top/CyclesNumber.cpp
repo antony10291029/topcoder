@@ -11,16 +11,51 @@
 #include <fstream>
 
 using namespace std;
-
-class BracketSequenceDiv1 {
+typedef long long LL;
+const int M = 1e9 + 7;
+const int maxn = 100010, maxm = 310;
+int f[maxn + 10][maxm + 10], st[maxm + 10][maxm + 10];
+int fac[maxn + 10];
+inline void prepare() {
+    fac[0] = 1;
+	for (int i = 0; i <= 300; ++i) {
+		st[i][1] = st[i][i] = 1;
+		for (int j = 2; j <= i - 1; ++j) {
+			st[i][j] = (st[i-1][j-1] + 1LL * j * st[i-1][j]) % M;
+			(st[i][j] += M)%=M;
+		}
+	}
+	fac[0] = 1;
+	for (int i = 1; i <= 100000; ++i) {
+		fac[i] = 1LL * fac[i-1] *  i % M;
+	}
+	f[0][0] = 1;
+	for (int i = 1; i <= 100000; ++i) {
+		f[i][0] = fac[i];
+		for (int j = 1; j <= 300; ++j) {
+			f[i][j] = (1LL * f[i-1][j] * i % M + f[i-1][j-1] % M)%M;
+		}
+	}
+}
+class CyclesNumber {
     public:
-    long long count(string s) {
-        return 0;
+    vector<int> getExpectation(vector<int> n, vector<int> m) {
+        prepare();
+        vector<int> ans;
+        for (int i = 0; i < n.size(); ++i) {
+            int ret = 0;
+            for (int k = 0; k < m[i] + 1; ++k) {
+                (ret += 1LL * st[m[i]][k] * f[n[i]][k] % M * fac[k] % M)%=M;
+            }
+            (ret += M) %= M;
+            ans.push_back(ret);
+        }
+        return ans;
     }
 };
 
 // CUT begin
-ifstream data("BracketSequenceDiv1.sample");
+ifstream data("CyclesNumber.sample");
 
 string next_line() {
     string s;
@@ -37,6 +72,17 @@ void from_stream(string &s) {
     s = next_line();
 }
 
+template <typename T> void from_stream(vector<T> &ts) {
+    int len;
+    from_stream(len);
+    ts.clear();
+    for (int i = 0; i < len; ++i) {
+        T t;
+        from_stream(t);
+        ts.push_back(t);
+    }
+}
+
 template <typename T>
 string to_string(T t) {
     stringstream s;
@@ -48,10 +94,21 @@ string to_string(string t) {
     return "\"" + t + "\"";
 }
 
-bool do_test(string s, long long __expected) {
+template <typename T> string to_string(vector<T> ts) {
+    stringstream s;
+    s << "[ ";
+    for (int i = 0; i < ts.size(); ++i) {
+        if (i > 0) s << ", ";
+        s << to_string(ts[i]);
+    }
+    s << " ]";
+    return s.str();
+}
+
+bool do_test(vector<int> n, vector<int> m, vector<int> __expected) {
     time_t startClock = clock();
-    BracketSequenceDiv1 *instance = new BracketSequenceDiv1();
-    long long __result = instance->count(s);
+    CyclesNumber *instance = new CyclesNumber();
+    vector<int> __result = instance->getExpectation(n, m);
     double elapsed = (double)(clock() - startClock) / CLOCKS_PER_SEC;
     delete instance;
 
@@ -72,10 +129,12 @@ int run_test(bool mainProcess, const set<int> &case_set, const string command) {
     while (true) {
         if (next_line().find("--") != 0)
             break;
-        string s;
-        from_stream(s);
+        vector<int> n;
+        from_stream(n);
+        vector<int> m;
+        from_stream(m);
         next_line();
-        long long __answer;
+        vector<int> __answer;
         from_stream(__answer);
 
         cases++;
@@ -83,16 +142,16 @@ int run_test(bool mainProcess, const set<int> &case_set, const string command) {
             continue;
 
         cout << "  Testcase #" << cases - 1 << " ... ";
-        if ( do_test(s, __answer)) {
+        if ( do_test(n, m, __answer)) {
             passed++;
         }
     }
     if (mainProcess) {
         cout << endl << "Passed : " << passed << "/" << cases << " cases" << endl;
-        int T = time(NULL) - 1467246685;
+        int T = time(NULL) - 1467423644;
         double PT = T / 60.0, TT = 75.0;
         cout << "Time   : " << T / 60 << " minutes " << T % 60 << " secs" << endl;
-        cout << "Score  : " << 300 * (0.3 + (0.7 * TT * TT) / (10.0 * PT * PT + TT * TT)) << " points" << endl;
+        cout << "Score  : " << 600 * (0.3 + (0.7 * TT * TT) / (10.0 * PT * PT + TT * TT)) << " points" << endl;
     }
     return 0;
 }
@@ -110,7 +169,7 @@ int main(int argc, char *argv[]) {
         }
     }
     if (mainProcess) {
-        cout << "BracketSequenceDiv1 (300 Points)" << endl << endl;
+        cout << "CyclesNumber (600 Points)" << endl << endl;
     }
     return run_test(mainProcess, cases, argv[0]);
 }
