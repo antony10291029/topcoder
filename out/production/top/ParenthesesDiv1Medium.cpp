@@ -15,14 +15,14 @@ using namespace std;
 const int INF = 1<<29;
 int N;
 bool reach[2010][2010];
-int gL[1020], gR[2010];
+int gL[2010], gR[2010];
 bool used[2010];
 int dp[2010][2010];
 
 int func(string s) {
     int N = s.length();
     int i,j;
-    
+
     REP(i,N+1)REP(j,N+1)dp[i][j]=INF;
     dp[0][0]=0;
 
@@ -80,7 +80,7 @@ class ParenthesesDiv1Medium {
         vector<pair<int, pair<int, int> > > v;//len, L, R
         REP(i, N+1) {
             for(j=i+1;j<=N;++j) {
-                if(reach[i][j] && reach[j][i]) 
+                if(reach[i][j] && reach[j][i])
                     break;
             }
             if (j <= N) v.push_back(make_pair(j-i,make_pair(i,j)));

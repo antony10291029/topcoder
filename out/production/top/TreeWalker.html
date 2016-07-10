@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder SRM 691 - 300: Sunnygraphs</title>
+    <title>TopCoder SRM 690 - 500: TreeWalker</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -213,10 +213,10 @@ li.testcase .data {
 
 <body>
     <h1 class="heading">
-        <span id='contest-name'>SRM 691</span>
+        <span id='contest-name'>SRM 690</span>
         <span id='contest-division'>1</span>
-        <span id='problem-score'>300</span>
-        <span id='problem-name'>Sunnygraphs</span>
+        <span id='problem-score'>500</span>
+        <span id='problem-name'>TreeWalker</span>
     </h1>
 
     <hr />
@@ -225,27 +225,36 @@ li.testcase .data {
     <div class="section">
         <h2 class="section-title">Problem Statement</h2>
         <div class="problem-intro">
-            <intro escaped="1">Hero has just constructed a very specific graph.
-He started with n isolated vertices, labeled 0 through n-1.
-For each vertex i Hero then chose a vertex <b>a</b>[i] (other than i) and he added an edge that connected i and <b>a</b>[i].
-This way he created a graph with n vertices and n edges.
-Note that if <b>a</b>[x]=y and <b>a</b>[y]=x, the vertices x and y were connected by two different edges.
+            <intro escaped="1">Given a directed graph G, we will use p(G) to denote the number of ordered pairs of distinct vertices (x,y) such that G contains a directed path from x to y.<br /><br />
 
-Hero now wants to perform the following procedure:
-<ol>
-<li>Add a new isolated vertex number n.</li>
-<li>Choose a subset M of the original vertices.</li>
-<li>For each x in M, erase an edge between vertices x and <b>a</b>[x].</li>
-<li>For each x in M, add a new edge between vertices x and n.</li>
-</ol>
+For example, let G1 be a graph on vertices {0,1,2} that contains the edges 0-&gt;1 and 1-&gt;2.
+For this graph we have p(G1)=3: there is a path from 0 to 1, a path from 1 to 2, and a path from 0 to 2.
+Similarly, let G2 contain the edges 0-&gt;1 and 2-&gt;1.
+Then p(G2)=2: the only two valid paths are from 0 to 1 and from 2 to 1.<br /><br />
 
-Hero's goal is to create a final graph in which the vertices 0 and 1 are in the same connected component.
-(I.e., there is a path from one of them to the other.)
+You are given an undirected tree T with <b>N</b> vertices.
+The vertices are numbered 0 through <b>N</b>-1.
+The exact format in which T is given is specified below.<br /><br />
 
-In step 2 of the above procedure Hero has 2^n possible subsets to choose from.
-A choice of M is good if it produces a graph with the desired property.
-Count how many of the 2^n possibilities are good choices.
-Return that count as a <type>long</type>.</intro>
+We can change T into a directed graph U by replacing each undirected edge of T by one of the two possible directed edges.
+As there are exactly <b>N</b>-1 edges in T, there are exactly 2^(<b>N</b>-1) possible graphs U we can produce.<br /><br />
+
+For each possible U compute the value p(U).
+Let X be the sum of those 2^(<b>N</b>-1) values.
+Compute and return the value (X modulo 1,000,000,007).<br /><br />
+
+You are given the <type>int</type>s <b>N</b>, <b>A0</b>, <b>B</b>, <b>C</b>, and <b>MOD</b>.
+Use the pseudocode given below to generate the tree T.
+Watch out for integer overflow.<br /><br />
+<pre>
+A[0] = A0
+for i = 1 .. N-2:
+	A[i] = (B * A[i-1] + C) % MOD
+
+for i = 1 .. N-1:
+	j = A[i-1] % i
+	add an edge between vertices i and j 
+</pre></intro>
         </div>
     </div>
     
@@ -257,30 +266,38 @@ Return that count as a <type>long</type>.</intro>
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>Sunnygraphs</span>
+                    <span class='definition-value'>TreeWalker</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>count</span>
+                    <span class='definition-value'>calc</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
                     <span class='definition-value'>
                     
-                        vector&lt;int&gt;
+                        int
+                    , 
+                        int
+                    , 
+                        int
+                    , 
+                        int
+                    , 
+                        int
                     
                     </span>
                 </li>
                 <li class="definition-line" id='returns-line'>
                     <span class='definition-name'>Returns</span>
                     <span class='definition-value'>
-                        long long
+                        int
                     </span>
                 </li>
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        long long count(vector&lt;int&gt; a)
+                        int calc(int N, int A0, int B, int C, int MOD)
                     </span>
                 </li>
             </ul>
@@ -313,13 +330,11 @@ Return that count as a <type>long</type>.</intro>
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1"><b>a</b> will contain n elements.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>N</b> will be between 2 and 100,000, inclusive.</user-constraint></li>
         
-            <li><user-constraint escaped="1">n will be between 2 and 50, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>A0</b>, <b>B</b> and <b>C</b> will be between 0 and 1,000,000,000, inclusive.</user-constraint></li>
         
-            <li><user-constraint escaped="1">Each element in <b>a</b> will be between 0 and n - 1, inclusive.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">For each i between 0 and n - 1 holds <b>a</b>[i] != i.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>MOD</b> will be between 1 and 1,000,000,000, inclusive.</user-constraint></li>
         
         </ul>
     </div>
@@ -336,10 +351,46 @@ Return that count as a <type>long</type>.</intro>
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">a</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 1, 0 }
+                                    4
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">A0</span>
+                                <span class="value data">
+                                
+                                    0
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">B</span>
+                                <span class="value data">
+                                
+                                    1
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">C</span>
+                                <span class="value data">
+                                
+                                    1
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">MOD</span>
+                                <span class="value data">
+                                
+                                    1000
                                 
                                 </span>
                             </li>
@@ -351,26 +402,21 @@ Return that count as a <type>long</type>.</intro>
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            4
+                            34
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">The original graph contained the vertices 0 and 1.
-This pair of vertices was connected by two edges.
-
-Next, Hero added a new vertex 2.
-Then he had to choose one of four possible subsets M:
+                        <div class="testcase-comment">The graph T generated by our pseudocode is the path 0 - 1 - 2 - 3.
+There are 2^3 = 8 possible ways to assign directions to these edges:
 <ul>
-<li>If he chose M = {}, the resulting graph contained the edges 0-1 and 0-1. The vertices 0 and 1 were connected.</li>
-<li>If he chose M = {0}, the resulting graph contained the edges 0-1 and 0-2. The vertices 0 and 1 were connected.</li>
-<li>If he chose M = {1}, the resulting graph contained the edges 0-1 and 1-2. The vertices 0 and 1 were connected.</li>
-<li>Finally, if he chose M = {0, 1}, the resulting graph contained the edges 0-2 and 1-2. And again, the vertices 0 and 1 were connected: there is a path 0-1-2.</li>
+<li>In two cases (0 -&gt; 1 -&gt; 2 -&gt; 3, 0 &lt;- 1 &lt;- 2 &lt;- 3) we have p(U) = 6.</li>
+<li>In four cases (0 -&gt; 1 -&gt; 2 &lt;- 3, 0 -&gt; 1 &lt;- 2 &lt;- 3, 0 &lt;- 1 -&gt; 2 -&gt; 3, 0 &lt;- 1 &lt;- 2 -&gt; 3) we have p(U) = 4.</li>
+<li>In two cases (0 -&gt; 1 &lt;- 2 -&gt; 3, 0 &lt;- 1 -&gt; 2 &lt;- 3) we have p(U) = 3.</li>
 </ul>
-
-As all four choices of M are good, the correct answer is 4.</div>
+The sum of p(U) over all possible U is X = 6+6+4+4+4+4+3+3 = 34.</div>
                     </div>
                     
                
@@ -384,50 +430,46 @@ As all four choices of M are good, the correct answer is 4.</div>
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">a</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 2, 2, 0 }
+                                    10
                                 
                                 </span>
                             </li>
-                        
-                        </ul>
-                    </div>
-                    <div class="testcase-output">
-                        <div class='tag'>output</div>
-                        <span class="prefix data">Returns</span>
-                        <span class="value data">
-                        
-                            7
-                        
-                        </span>
-                    </div>
-                    
-                    <div class="testcase-annotation">
-                        <div class='tag'>note</div>
-                        <div class="testcase-comment">Here, the original graph contained the edges 0-2, 0-2, and 1-2.
-For this graph M = {1} is not a good choice.
-This choice produces a graph with edges 0-2, 0-2, and 1-3.
-In this graph the vertices 0 and 1 are not in the same connected component.
-The other seven possible choices of M are all good.</div>
-                    </div>
-                    
-               
-                </div>
-            </li>
-            
-            <li class="testcase">
-                <div class="testcase-content">
-                    <div class="testcase-input">
-                        <div class='tag'>input</div>
-                        <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">a</span>
+                                <span class="name data">A0</span>
                                 <span class="value data">
                                 
-                                    { 2, 3, 0, 1 }
+                                    0
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">B</span>
+                                <span class="value data">
+                                
+                                    0
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">C</span>
+                                <span class="value data">
+                                
+                                    0
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">MOD</span>
+                                <span class="value data">
+                                
+                                    1
                                 
                                 </span>
                             </li>
@@ -439,7 +481,7 @@ The other seven possible choices of M are all good.</div>
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            9
+                            13824
                         
                         </span>
                     </div>
@@ -455,10 +497,46 @@ The other seven possible choices of M are all good.</div>
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">a</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 2, 2, 3, 4, 3 }
+                                    16
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">A0</span>
+                                <span class="value data">
+                                
+                                    15
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">B</span>
+                                <span class="value data">
+                                
+                                    1
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">C</span>
+                                <span class="value data">
+                                
+                                    1
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">MOD</span>
+                                <span class="value data">
+                                
+                                    16
                                 
                                 </span>
                             </li>
@@ -470,7 +548,7 @@ The other seven possible choices of M are all good.</div>
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            30
+                            917506
                         
                         </span>
                     </div>
@@ -486,10 +564,46 @@ The other seven possible choices of M are all good.</div>
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">a</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 18, 18, 20, 28, 7, 27, 8, 13, 40, 3, 7, 21, 30, 17, 13, 34, 29, 16, 15, 11, 0, 9, 39, 36, 38, 23, 24, 8, 4, 9, 29, 22, 35, 5, 13, 23, 3, 27, 34, 23, 8 }
+                                    1000
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">A0</span>
+                                <span class="value data">
+                                
+                                    385498676
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">B</span>
+                                <span class="value data">
+                                
+                                    349131547
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">C</span>
+                                <span class="value data">
+                                
+                                    115776323
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">MOD</span>
+                                <span class="value data">
+                                
+                                    614879544
                                 
                                 </span>
                             </li>
@@ -501,7 +615,74 @@ The other seven possible choices of M are all good.</div>
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            2198754820096
+                            245566366
+                        
+                        </span>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    100000
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">A0</span>
+                                <span class="value data">
+                                
+                                    111222333
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">B</span>
+                                <span class="value data">
+                                
+                                    444555666
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">C</span>
+                                <span class="value data">
+                                
+                                    777888999
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">MOD</span>
+                                <span class="value data">
+                                
+                                    123456789
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            119729770
                         
                         </span>
                     </div>
