@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>TopCoder SRM 694 - 900: SRMDiv0Easy</title>
+    
+    <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
+    
+
+    
+    <style type="text/css">
+        /* font */
+body {
+    font-family: Helvetica, Arial, Verdana, sans-serif;
+    font-size: 16px;
+    line-height: 1.2em;
+}
+ul.constraints > li:before, ul.notes > li:before {
+    font-family: monospace;
+    font-weight: normal;
+}
+.heading {
+    font-weight: bold;
+    font-size: 175%;
+    line-height: 1.2em;
+}
+.section .section-title {
+    font-weight: bold;
+    font-size: 125%;
+}
+ol.testcases > li:before {
+    font-family: monospace;
+}
+type {
+    font-weight: bold;
+    font-family: monospace;
+}
+li.testcase .data {
+    font-family: monospace;
+    line-height: 1.5em;
+}
+
+/* layout */
+.heading {
+    margin-top: 0.1em;
+    margin-bottom:0.1em;
+    text-align: center;
+}
+.section .section-title {
+    margin-top : 1em;
+    margin-bottom: 1em;
+}
+.problem-intro, note, user-constraint {
+    padding-left: 1.25em;
+}
+
+/* Lists */
+ul.constraints, ul.notes, ul.variables, ul.problem-definition-lines {
+    list-style-type: none;
+    padding: 0px;
+}
+ul.constraints > li:before {
+    content: "-";
+    position:relative;
+    margin-left: 0px; /* optional, for multiline li element */
+    left: 0.625em;
+}
+ul.notes > li:before {
+    content: "-";
+    position:relative;
+    margin-left: 0px; /* optional, for multiline li element */
+    left: 0.625em;
+}
+
+/* Testcases */
+li.testcase {
+    line-height: 1.1em;
+    padding-top: 0.625em;
+    padding-bottom: 0.625em;
+    overflow: auto;
+}
+li.testcase > .testcase-content > div { padding-bottom: 0.5em; padding-left: 1em; }
+
+li.testcase .testcase-comment {
+    margin: 0;
+    padding-left: 1em;
+}
+.testcase-comment p:first-child { margin-top: 0; }
+.testcase-comment p:last-child { margin-bottom: 0; }
+
+li.testcase .testcase-content {
+    margin: 0.31em;
+}
+
+/* Data and variables */
+.testcase-output {
+    padding: 0.2em 1em 0.2em 0em;
+}
+.variables, .testcase-output {
+    margin-left: 0.5em;
+    display: table;
+    margin-bottom: 0px;
+    margin-top: 0px;
+}
+.variable {
+    display: table-row;
+}
+.variable .name {
+    padding: 0.2em 0em 0.2em 1em;
+    font-weight: bold;
+    display: table-cell;
+    text-align: right;
+}
+.testcase-output .prefix {
+    padding: 0.2em 0em 0.2em 1em;
+    display: table-cell;
+}
+.testcase-output .prefix:after {
+    content : ":";
+    padding-right: 0.5em;
+}
+.variable .name:after {
+    font-weight: bold;
+    content : ":";
+    padding-right: 0.5em;
+}
+.variable .value, .testcase-output .value {
+    padding: 0.2em 1em 0.2em 0em;
+    display: table-cell;
+}
+ol.testcases {
+    padding: 0px;
+    counter-reset: test_number -1;
+}
+ol.testcases > li {
+    list-style:none;
+}
+ol.testcases > li:before {
+    counter-increment:test_number;
+    display: block;
+    clear: both;
+    content:counter(test_number) ")";
+    color: inherit;
+    background: inherit;
+}
+
+/* Problem Definition */
+.problem-definition, .problem-limits {
+    padding-left: 1.25em;
+}
+.problem-definition-lines, .limit-lines {
+    display: table;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-left: 0px;
+}
+.definition-line, .limit-line {
+    display: table-row;
+    height: 1.5em;
+    overflow: auto;
+}
+.limit-name:after {
+    content: ":";
+    margin-right: 1em;
+}
+.definition-name, .definition-value, .limit-name, .limit-value {
+    display: table-cell;
+}
+.definition-value {
+    padding-left: 0.5em;
+}
+.definition-name:after {
+    content: ":";
+}
+#contest-division:before {
+    content: "Div ";
+}
+#problem-score:before {
+    content: "- Problem ";
+}
+#problem-name {
+    display: block;
+}
+
+/* Tags, hidden default */
+.tag {
+    visibility: hidden;
+    position: absolute;
+}
+
+        body {
+    /* font color */
+    color: #333333;
+    /* background color */
+    background-color: white;
+}
+.section .section-title {
+    /* title color */
+    color: black;
+}
+li.testcase .data {
+    /* highlight color */
+    background: #eee;
+}
+
+    </style>
+    
+    
+    
+
+</head>
+
+<body>
+    <h1 class="heading">
+        <span id='contest-name'>SRM 694</span>
+        <span id='contest-division'>1</span>
+        <span id='problem-score'>900</span>
+        <span id='problem-name'>SRMDiv0Easy</span>
+    </h1>
+
+    <hr />
+
+    <!-- Problem Statement -->
+    <div class="section">
+        <h2 class="section-title">Problem Statement</h2>
+        <div class="problem-intro">
+            <intro escaped="1"><p>The year is 2147.
+Taro is preparing a problem set for the upcoming SRM, and he still needs an easy problem for division 0.
+For inspiration, he has been looking at problems from some very old SRMs.
+Here is a problem he just found:</p>
+<p></p>
+<p>You have a sequence A of length <b>N</b>.
+Initially, all elements of A are zeros.
+You are given a sequence of Q instructions to process.
+Instruction i has the following form:
+&quot;Add V[i] to each of the elements with indices between <b>L</b>[i] and <b>R</b>[i], inclusive.&quot;
+Apply all the instructions in the given order, and return the resulting sequence.</p>
+<p></p>
+<p>&quot;Too easy.&quot; concluded Taro.
+&quot;Now even babies can solve such problems. I need to make it harder.&quot;
+And indeed, he came up with a way to modify the above problem.
+The new problem is described below.
+Solve it!</p>
+<p></p>
+<p>In the new problem, you are given the <type>int</type> <b>N</b> and you are given the <type>int[]</type>s <b>L</b> and <b>R</b> (each with Q elements).
+You are not given the values V[i].
+Instead, you are given the following additional information:</p>
+<ul>
+<li>You are given two new <type>int[]</type>s <b>X</b> and <b>Y</b>, each with Q elements. For each i, the value V[i] must be between <b>X</b>[i] and <b>Y</b>[i], inclusive.</li>
+<li>After all the instructions have been applied, all elements of A must have the same value. (Let's denote that value Z.)</li>
+</ul>
+<p>Return the largest possible value Z that can be achieved by an appropriate choice of the values V[i].
+If there is no value Z that can be achieved, return -1 instead.
+(In other words, the return value -1 means that for each valid choice of values V[i] there will be at least two different values in the final sequence A.)</p></intro>
+        </div>
+    </div>
+    
+    <!-- Problem definition -->
+    
+    <div class="section" id="definition">
+        <h2 class="section-title">Definition</h2>
+        <div class="problem-definition">
+            <ul class="problem-definition-lines">
+                <li class="definition-line" id='class-line'>
+                    <span class='definition-name'>Class</span>
+                    <span class='definition-value'>SRMDiv0Easy</span>
+                </li>
+                <li class="definition-line" id='method-line'>
+                    <span class='definition-name'>Method</span>
+                    <span class='definition-value'>get</span>
+                </li>
+                <li class="definition-line" id='parameters-line'>
+                    <span class='definition-name'>Parameters</span>
+                    <span class='definition-value'>
+                    
+                        int
+                    , 
+                        vector&lt;int&gt;
+                    , 
+                        vector&lt;int&gt;
+                    , 
+                        vector&lt;int&gt;
+                    , 
+                        vector&lt;int&gt;
+                    
+                    </span>
+                </li>
+                <li class="definition-line" id='returns-line'>
+                    <span class='definition-name'>Returns</span>
+                    <span class='definition-value'>
+                        int
+                    </span>
+                </li>
+                <li class="definition-line" id='signature-line'>
+                    <span class='definition-name'>Method signature</span>
+                    <span class='definition-value'>
+                        int get(int N, vector&lt;int&gt; L, vector&lt;int&gt; R, vector&lt;int&gt; X, vector&lt;int&gt; Y)
+                    </span>
+                </li>
+            </ul>
+            <div class="problem-definition-public-tip">(be sure your method is public)</div>
+        </div>        
+    </div>
+    
+
+    <!-- Limits -->
+    <div class="section">
+        <h2 class="section-title">Limits</h2>
+        <div class='problem-limits'>
+            <ul class="limit-lines">
+                <li class='limit-line'>
+                    <span class='limit-name'>Time limit (s)</span>
+                    <span class='limit-value'>2.000</span>
+                </li>
+                <li class='limit-line'>
+                    <span class='limit-name'>Memory limit (MB)</span>
+                    <span class='limit-value'>256</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    
+    
+    <!-- Constraints -->
+    <div class="section">
+        <h2 class="section-title">Constraints</h2>
+        <ul class="constraints">
+        
+            <li><user-constraint escaped="1"><b>N</b> will be between 2 and 200, inclusive.</user-constraint></li>
+        
+            <li><user-constraint escaped="1"><b>Q</b> will be between 0 and 200, inclusive.</user-constraint></li>
+        
+            <li><user-constraint escaped="1"><b>L,R,X,Y</b> will each have exactly <b>Q</b> elements.</user-constraint></li>
+        
+            <li><user-constraint escaped="1">Each element of <b>L,R</b> will each be between 0 and <b>N</b>-1, inclusive.</user-constraint></li>
+        
+            <li><user-constraint escaped="1">For each i between 0 and <b>Q</b>-1, <b>L</b>[i] is equal to or less than <b>R</b>[i].</user-constraint></li>
+        
+            <li><user-constraint escaped="1">Each element of <b>X,Y</b> will each be between 0 and 1000, inclusive.</user-constraint></li>
+        
+            <li><user-constraint escaped="1">For each i between 0 and <b>Q</b>-1, <b>X</b>[i] is equal to or less than <b>Y</b>[i].</user-constraint></li>
+        
+        </ul>
+    </div>
+
+    <!-- Test cases -->
+    <div class="section">
+        <h2 class="section-title">Test cases</h2>
+        <ol class="testcases" start='0'>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    2
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 1 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 0, 1 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    { 1, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    { 2, 3 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            2
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">If <b>V</b>[0] = 2, <b>V</b>[1] = 2, resulting sequence will be {2,2} and it meets the condition. So, the answer is 2.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    2
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 1 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 0, 1 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    { 1, 3 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    { 2, 4 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            -1
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">In this case, we can't achive the state that all the numbers of <b>A</b> are equal.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    3
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 1, 0, 0, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 2, 2, 1, 0, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    { 1, 3, 1, 4, 2 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    { 11, 13, 19, 15, 17 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            41
+                        
+                        </span>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    12
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 0, 1, 4, 9, 7, 0 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 6, 11, 11, 4, 10, 11, 0 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    { 1, 73, 334, 1, 1, 5, 362 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    { 546, 342, 645, 249, 999, 535, 458 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            -1
+                        
+                        </span>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    200
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    { 0, 49, 0, 97, 0, 65, 0, 55, 0, 24, 0, 86, 0, 139, 0, 34, 0, 11, 0, 62, 0, 172, 0, 59, 0, 97, 0, 47, 0, 156, 0, 24, 0, 103, 0, 184, 0, 130, 0, 154, 0, 26, 0, 121, 0, 72, 0, 183, 0, 5 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    { 48, 199, 96, 199, 64, 199, 54, 199, 23, 199, 85, 199, 138, 199, 33, 199, 10, 199, 61, 199, 171, 199, 58, 199, 96, 199, 46, 199, 155, 199, 23, 199, 102, 199, 183, 199, 129, 199, 153, 199, 25, 199, 120, 199, 71, 199, 182, 199, 4, 199 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    { 1, 1, 1, 1, 2, 1, 2, 2, 2, 2, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 1, 2, 1, 1, 2, 2, 1, 1, 1, 2, 2, 1, 1, 2, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 1 }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    { 964, 962, 952, 993, 983, 973, 971, 954, 978, 980, 958, 999, 991, 978, 977, 991, 971, 976, 977, 998, 968, 992, 951, 955, 987, 981, 986, 958, 968, 966, 992, 957, 975, 995, 958, 995, 983, 985, 956, 974, 966, 986, 985, 999, 959, 989, 980, 998, 971, 973 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            24202
+                        
+                        </span>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    5
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">L</span>
+                                <span class="value data">
+                                
+                                    {  }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">R</span>
+                                <span class="value data">
+                                
+                                    {  }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">X</span>
+                                <span class="value data">
+                                
+                                    {  }
+                                
+                                </span>
+                            </li>
+                        
+                            <li class="variable data">
+                                <span class="name data">Y</span>
+                                <span class="value data">
+                                
+                                    {  }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            0
+                        
+                        </span>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+        </ol>
+    </div>
+    <hr />
+
+    This problem statement is the exclusive and proprietary property of TopCoder, Inc. Any unauthorized use or reproduction of this information without the prior written consent of TopCoder, Inc. is strictly prohibited. (c)2003, TopCoder, Inc. All rights reserved.
+</body>
+</html>
