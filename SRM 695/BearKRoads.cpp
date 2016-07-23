@@ -11,11 +11,78 @@
 #include <fstream>
 
 using namespace std;
+#define REP(i,n) for(i=0;i<n;++i)
+bool deg[2010];
+int N;
+vector <pair <int, pair <int, int> > > v;
+vector <int> graph[2010];
+bool used[2010];
+bool same(int x, int y) {
+    return (x == y && x != -1);
+}
+bool can_take(int x) {
+    int a= v[x].second.first;
+    if (a != -1 && used[a]) return false;
+    a = v[x].second.second;
+    if (a != -1 && used[a]) return false;
+    return true;
+}
+void take(int x) {
+    int a = v[x].second.first;
+    if (a != -1) used[a] = true;
+    a = v[x].second.second;
+    if (a != -1) used[a] = true;
+}
+void untake(int x) {
+    int a = v[x].second.first;
+    if (a != -1) used[a] = false;
+    a = v[x].second.second;
+    if (a != -1) used[a] = false;
+}
+int dfs(int pos, int K) {
+    int i;
+    if (K == 0 || pos == N) return 0;
+    if (!can_take(pos)) return dfs(pos + 1, K);
 
+    take(pos);
+    int ans = dfs(pos + 1, K - 1) + v[pos].first;
+    untake(pos);
+
+    REP(i, graph[pos].size()) {
+        int x = graph[pos][i];
+        if (can_take(x)) {
+            take(x);
+            int tmp = dfs(pos + 1, K - 1) + v[x].first;
+            untake(x);
+            ans = max(ans, tmp);
+        }
+    }
+    return ans;
+}
 class BearKRoads {
     public:
-    int maxHappy(vector<int> x, vector<int> a, vector<int> b, int K) {
-        return 0;
+    int maxHappy(vector<int> x, vector<int> a, vector<int> b, int KK) {
+        int i, j;
+
+        REP(i, a.size()) deg[a[i]] = deg[b[i]] = true;
+
+        REP(i, a.size()) v.push_back(make_pair(x[a[i]] + x[b[i]], make_pair(a[i], b[i])));
+        REP(i, x.size()) if (deg[i]) v.push_back(make_pair(x[i], make_pair(i, -1)));
+
+        N = v.size();
+        int K = min(N, KK);
+        sort(v.begin(), v.end());
+        reverse(v.begin(), v.end());
+
+        REP(i,N) REP(j,N) if (i != j) {
+            int p1 = v[i].second.first;
+            int p2 = v[i].second.second;
+            int q1 = v[j].second.first;
+            int q2 = v[j].second.second;
+            if (same(p1, q1) || same(p1, q2) || same(p2, q1) || same(p2,q2)) graph[i].push_back(j);
+        }
+        int ans = dfs(0, K);
+        return ans;
     }
 };
 
