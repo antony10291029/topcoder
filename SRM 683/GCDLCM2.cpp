@@ -62,6 +62,9 @@ int GCDLCM2::getMaximalSum(vector<int> start, vector<int> d, vector<int> cnt) {
     }
     for (int i = 0; i < t; ++i) {
         sort(z[i].rbegin(), z[i].rend());
+        //sort(z[i].begin(), z[i].end());
+        //reverse(z[i].begin(), z[i].end());
+
         int at = 0;
         for (int j = 0; j < (int) z[i].size(); ++j) {
             int tmp = 1;
