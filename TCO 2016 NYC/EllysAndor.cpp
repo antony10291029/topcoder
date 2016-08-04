@@ -15,7 +15,19 @@ using namespace std;
 class EllysAndor {
     public:
     string canGet(vector<int> numbers, int goal) {
-        return "";
+        int one_bits = goal;
+        int zero_bits = (1<<30) - 1 - goal;
+        for (int i = numbers.size() - 1; i >= 0; --i) {
+            int one = numbers[i];
+            int zero = (1<<30) - 1 - one;
+            if ((one & one_bits) == one_bits && (zero & zero_bits) == zero_bits) return "Possible";
+            if ((one & one_bits) == one_bits) {
+                zero_bits ^= (zero_bits & zero);
+            } else if ((zero & zero_bits) == zero_bits) {
+                one_bits ^= (one_bits & one);
+            }
+        }
+        return ((one_bits == 0) ? "Possible" : "Impossible");
     }
 };
 
