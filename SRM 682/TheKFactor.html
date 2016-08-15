@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder SRM 682 - 450: SuccessfulMerger</title>
+    <title>TopCoder SRM 682 - 900: TheKFactor</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -215,8 +215,8 @@ li.testcase .data {
     <h1 class="heading">
         <span id='contest-name'>SRM 682</span>
         <span id='contest-division'>1</span>
-        <span id='problem-score'>450</span>
-        <span id='problem-name'>SuccessfulMerger</span>
+        <span id='problem-score'>900</span>
+        <span id='problem-name'>TheKFactor</span>
     </h1>
 
     <hr />
@@ -225,45 +225,36 @@ li.testcase .data {
     <div class="section">
         <h2 class="section-title">Problem Statement</h2>
         <div class="problem-intro">
-            <intro escaped="1">In the country of Byteland, there are N cities connected by N bidirectional roads (that is, the number of roads is the same as the number of cities).
-The cities are numbered from 0 to N-1.
-For each i from 0 to N-1, a bidirectional road connects city i and city <b>road</b>[i].
-(Note that sometimes a pair of cities can be connected by two distinct roads.)
-It is possible to travel between any pair of cities using the network of roads.
+            <intro escaped="1">Bob has been selected to compete on a game show called <i>The K Factor</i>.
+The rules are as follows:
+The game is played on a strip of N cells that goes from the left to the right.
+The cells are numbered from 0 to N-1, starting on the left end.
+Additionally, each cell of the grid has a value written on it.
+You are given these values in the <type>int[]</type> <b>values</b>.
+
+Bob starts the game on cell 0.
+During the game he will sometimes be asked to make a move.
+Each time he is asked to do so, he has two options: he can either end the whole game (remaining where he stands at that moment), or move one cell to the right.
+The amount he wins is the value written in the cell where he stands at the end of the game.
+
+Of course, there is a catch.
+At the beginning of the game, the host of the show generates a secret integer K.
+The value of K is always between 0 and N-1, inclusive.
+K is then used as the maximum number of times the host will ask Bob to make a move.
+(If Bob actually makes K moves to the right without deciding to end the game, after Bob's K-th move the host will terminate the game.
+In this case Bob still gets the amount written in the cell where he finished the game.)
 <br /><br />
 
-You are the prime minister of Byteland and you must choose one of the cities to be the capital city.
-The capital city must have the following property:
-whenever A and B are two distinct cities, it must be impossible to travel between A and B without visiting the capital.
+The host of the show keeps the value of K secret from Bob.
+However, Bob does have some information about K.
+He knows that K is chosen at random.
+He does not know the exact probability distribution used by the host when generating K, but he knows one property of this probability distribution:
+for each positive integer X, the chance that K is less than X is at most X/N.
 <br /><br />
 
-If there is no valid location for the capital, you must create one.
-In order to do that, you may modify the road network by doing a sequence of mergers.
-A merger is an operation that merges two adjacent cities into a single new city.
-Formally, a merger is performed as follows:
-<ul>
-<li>You select two cities X and Y that are directly connected by a road. (They may even be connected by more than one direct road.)</li>
-<li>The two cities are merged together to create a new city Z.</li>
-<li>All direct roads between X and Y disappear. Each other road that connected X or Y to some other city now connects Z to that other city.</li>
-</ul>
-
-For example, suppose this is the network:
-<br /><br />
-
-<img src="http://www.topcoder.com/contest/problem/SuccessfulMerger/MergerDiagram1.png"></img>
-<br /><br />
-
-There is no valid location for the capital. However, by merging city 1 and city 2, we can create a valid location:
-<br /><br />
-
-<img src="http://www.topcoder.com/contest/problem/SuccessfulMerger/MergerDiagram2.png"></img>
-<br /><br />
-
-Now the newly-created city is a valid location for the capital.
-<br /><br />
-
-You are given the description of the road network in the <type>int[]</type> <b>road</b>.
-Please find and return the minimum number of mergers necessary to create a valid location for the capital.</intro>
+Assume that Bob uses the strategy that maximizes the expected value of the amount he wins against the worst possible distribution of values for K.
+By a &quot;strategy&quot;, we mean that Bob selects, for each cell, the probability that he will stop at that cell if he reaches it.
+Please find the expected value of the amount Bob will win.</intro>
         </div>
     </div>
     
@@ -275,11 +266,11 @@ Please find and return the minimum number of mergers necessary to create a valid
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>SuccessfulMerger</span>
+                    <span class='definition-value'>TheKFactor</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>minimumMergers</span>
+                    <span class='definition-value'>expectedScore</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
@@ -292,13 +283,13 @@ Please find and return the minimum number of mergers necessary to create a valid
                 <li class="definition-line" id='returns-line'>
                     <span class='definition-name'>Returns</span>
                     <span class='definition-value'>
-                        int
+                        double
                     </span>
                 </li>
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        int minimumMergers(vector&lt;int&gt; road)
+                        double expectedScore(vector&lt;int&gt; values)
                     </span>
                 </li>
             </ul>
@@ -325,21 +316,25 @@ Please find and return the minimum number of mergers necessary to create a valid
     </div>
 
     
+    <!-- Notes -->
+    <div class="section">
+        <h2 class="section-title">Notes</h2>
+        <ul class="notes">
+        
+            <li><note escaped="1">Your answer will be considered correct if its absolute or relative error does not exceed 10^(-4).</note></li>
+        
+        </ul>
+    </div>
+    
     
     <!-- Constraints -->
     <div class="section">
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1">N will be between 2 and 50, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>values</b> will contain between 1 and 50 elements, inclusive.</user-constraint></li>
         
-            <li><user-constraint escaped="1"><b>road</b> will contain N elements.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">Each element of <b>road</b> will be between 0 and N-1, inclusive.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">For each valid i, <b>road</b>[i] does not equal i.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">It will be possible to travel from any city to any other city using the roads.</user-constraint></li>
+            <li><user-constraint escaped="1">Each element of <b>values</b> will be between 0 and 10000, inclusive.</user-constraint></li>
         
         </ul>
     </div>
@@ -356,10 +351,10 @@ Please find and return the minimum number of mergers necessary to create a valid
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">road</span>
+                                <span class="name data">values</span>
                                 <span class="value data">
                                 
-                                    { 2, 2, 1, 1, 1 }
+                                    { 1, 2, 3, 4, 5 }
                                 
                                 </span>
                             </li>
@@ -371,16 +366,14 @@ Please find and return the minimum number of mergers necessary to create a valid
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            1
+                            3.0
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">This test case corresponds to the example from the problem statement.
-In the given road network there is no valid location for the capital, so at least one merger is needed.
-The one merger shown above is therefore the optimal solution for this test case.</div>
+                        <div class="testcase-comment">Bob should never end this game early. The unique worst-case distribution is {1/5, 1/5, 1/5, 1/5, 1/5}. The expected value of Bob's score is 1 * (1/5) + 2 * (1/5) + 3 * (1/5) + 4 * (1/5) + 5 * (1/5) = 3.</div>
                     </div>
                     
                
@@ -394,10 +387,10 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">road</span>
+                                <span class="name data">values</span>
                                 <span class="value data">
                                 
-                                    { 3, 4, 5, 4, 5, 3 }
+                                    { 5, 9, 0, 34 }
                                 
                                 </span>
                             </li>
@@ -409,7 +402,43 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            2
+                            8.777778
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">Bob's optimal strategy can be succinctly described as follows: stop at cell 1 (amount=9) with probability 5/9 and to continue until cell 3 (amount=34) with probability 4/9. One possible worst-case distribution against this strategy is {0, 0, 3/4, 1/4}. Another worst-case distribution is {1/4, 0, 1/2, 1/4}. In both cases, the expected value of Bob's score is 79/9.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">values</span>
+                                <span class="value data">
+                                
+                                    { 10000, 0, 100 }
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            10000.0
                         
                         </span>
                     </div>
@@ -425,10 +454,10 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">road</span>
+                                <span class="name data">values</span>
                                 <span class="value data">
                                 
-                                    { 1, 0, 1, 0, 0, 0, 1, 0, 1, 1 }
+                                    { 4374, 5909, 7194, 8367, 1328, 9373, 6067, 7097, 7631, 4841, 2584, 6877, 9775, 2831, 1916, 3253, 8670, 736, 9016, 825, 5002, 8739, 3735, 3262, 5050, 2146, 9273, 5163, 4015, 3174, 1424, 7716, 4162, 9960, 1880, 4320, 7047, 3253, 8702 }
                                 
                                 </span>
                             </li>
@@ -440,7 +469,7 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            1
+                            8352.585573
                         
                         </span>
                     </div>
@@ -456,10 +485,10 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">road</span>
+                                <span class="name data">values</span>
                                 <span class="value data">
                                 
-                                    { 1, 2, 3, 0 }
+                                    { 4814, 4710, 5035, 4513, 5046, 4381, 5402, 4372, 6113, 4354, 6205, 4271, 6517, 3989, 6804, 3533, 6811, 3032, 7138, 2848, 7277, 2574, 7278, 2456, 7345, 2239, 7417, 2035, 7519, 1977, 7802, 1920, 8449, 1336, 8612, 1233, 9264, 902, 9284, 690, 9558, 408, 9608, 208, 9661, 139, 9797, 127, 9910, 99 }
                                 
                                 </span>
                             </li>
@@ -471,7 +500,7 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            2
+                            6077.793513
                         
                         </span>
                     </div>
@@ -487,10 +516,10 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">road</span>
+                                <span class="name data">values</span>
                                 <span class="value data">
                                 
-                                    { 31, 19, 0, 15, 30, 32, 15, 24, 0, 20, 40, 1, 22, 21, 39, 28, 0, 23, 15, 5, 19, 22, 6, 32, 8, 38, 35, 30, 4, 28, 32, 18, 18, 9, 22, 41, 20, 18, 6, 25, 41, 34, 4 }
+                                    { 0 }
                                 
                                 </span>
                             </li>
@@ -502,38 +531,7 @@ The one merger shown above is therefore the optimal solution for this test case.
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            25
-                        
-                        </span>
-                    </div>
-                    
-               
-                </div>
-            </li>
-            
-            <li class="testcase">
-                <div class="testcase-content">
-                    <div class="testcase-input">
-                        <div class='tag'>input</div>
-                        <ul class="variables">
-                        
-                            <li class="variable data">
-                                <span class="name data">road</span>
-                                <span class="value data">
-                                
-                                    { 1, 0 }
-                                
-                                </span>
-                            </li>
-                        
-                        </ul>
-                    </div>
-                    <div class="testcase-output">
-                        <div class='tag'>output</div>
-                        <span class="prefix data">Returns</span>
-                        <span class="value data">
-                        
-                            0
+                            0.0
                         
                         </span>
                     </div>
