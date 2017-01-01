@@ -10,63 +10,88 @@
 #include <fstream>
 #include <map>
 #include <algorithm>
-using namespace std;
-
-const int N = 201000;
-
-typedef long long ll;
-typedef vector<int> VI;
-typedef pair<int, int> PII;
-VI dl, dr;
-
-vector<PII> op;
-set<int> ps;
-
-int pp[N];
-
-#define rep(i, a, b) for (int i = a; i < b; ++i)
-#define all(x) (x).begin(), (x).end()
-#define pb push_back
 #define mp make_pair
+#define pb push_back      
+#define F first
+#define S second
+#define SS stringstream
+#define sqr(x) ((x)*(x))
+#define m0(x) memset(x,0,sizeof(x))
+#define m1(x) memset(x,63,sizeof(x))
+#define CC(x) cout << (x) << endl
+#define pw(x) (1ll<<(x))
+#define buli(x) __builtin_popcountll(x)
+#define M 1000000007
+#define N 2000111
+#define rep(i,n) for(int i=0;i<n;i++)
 
-int count(ll c, int x) {
-    return (lower_bound(all(dr), c - x) - dr.begin()) + (lower_bound(all(dl), c + x) - dl.begin());
+using namespace std;
+ 
+int pos[N];
+int dir[N];
+int kid[N], ti[N];
+ 
+long long ans[N];
+int n, q;
+ 
+void sol() {
+    vector<int> L, R;
+    rep(i,n) if(0 == dir[i]) L.pb(pos[i]); else R.pb(pos[i]);
+    sort(L.begin(), L.end());
+    sort(R.begin(), R.end());
+    for (int i = 0; i < q; i++) {
+        if (1 == dir[kid[i]]) {
+            int x = lower_bound(R.begin(), R.end(), pos[kid[i]]) - R.begin();
+            int y = lower_bound(L.begin(), L.end(), pos[kid[i]]) - L.begin();
+            int l = 0;
+            int r = n + 1;
+            while (l < r) {
+                int mid = (l + r + 1) >> 1;
+                int xx = x - (mid >> 2);
+                int yy = y + ((mid + 1) >> 1) - 1;
+                if (xx < 0 || y >= L.size() || abs(R[xx] - L[yy]) / 2. > ti[i]) r = mid - 1; else l = mid;
+            }
+            if (l % 2 == 0) {
+                ans[i] = abs(R[x - l / 2] + ti[i]);
+            } else {
+                ans[i] = abs(L[y + (l + 1) / 2 - 1] - ti[i]);
+            }
+        }
+    }
 }
-
-const ll mod = 1e9 + 7;
 
 class FindingKids {
     public:
-    long long getSum(int n, int q, int A, int B, int C) {
-        ps.clear(); dr.clear(); dl.clear(); op.clear();
-        rep(i, 0, n) {
-           A = (A * B + C) % mod;
-           ll p = A % (mod - n + i + 1);
-           if (ps.count(p)) p = mod - n + i;
-           ps.insert(p);
-           if (p % 2 == 0) dr.pb(p); else dl.pb(p);
-           op.pb(mp(p,i));
-        }
-        sort(all(dl));
-        sort(all(dr));
-        sort(all(op));
-#define se second
-        rep(i, 0, n) pp[op[i].se] = i;
-        ll ans = 0;
-        rep(i, 0, q) {
-            A = (A * B + C) % mod;
-            ll kid = A % n;
-            A = (A * B + C) % mod;
-            ll tm = A;
-            ll l = -mod - 1, r = 2 * mod + 1;
-            while (l + 1 < r) {
-                ll md = (l + r) >> 1;
-                if (count(md, tm) > pp[kid]) r = md; else l = md;
+    long long getSum(int nn, int qq, int A, int B, int C) {
+        n = nn;
+        q = qq;
+        set<int> was;
+        rep(i, n) {
+            A = (A * 1ll * B + C) % M;
+            int p = A % (M - n + i + 1);
+            if (was.find(p) != was.end()) {
+                p = M - n + i;
             }
-            ans += abs(l);
+            pos[i] = p;
+            was.insert(p);
+            if (p % 2 == 0) dir[i] = 1; else dir[i] = 0;
         }
-        return ans;
-    }
+        rep(i, q) {
+            A = (A * 1ll * B + C) % M;
+            kid[i] = A % n;
+            A = (A * 1ll * B + C) % M;
+            ti[i] = A;
+        }
+        sol();
+        for (int i = 0; i < n; i++) {
+            pos[i] *= -1;
+            dir[i] ^= 1;
+        }
+        sol();
+        long long ret = 0;
+        rep(i, q) ret += ans[i];
+        return ret;
+  }
 };
 
 // CUT begin
