@@ -46,10 +46,10 @@ void sol() {
             int l = 0;
             int r = n + 1;
             while (l < r) {
-                int mid = (l + r + 1) >> 1;
-                int xx = x - (mid >> 2);
-                int yy = y + ((mid + 1) >> 1) - 1;
-                if (xx < 0 || y >= L.size() || abs(R[xx] - L[yy]) / 2. > ti[i]) r = mid - 1; else l = mid;
+                int mid = (l + r + 1) / 2;
+                int xx = x - mid / 2;
+                int yy = y + (mid + 1) / 2- 1;
+                if (xx < 0 || yy >= L.size() || abs(R[xx] - L[yy]) / 2. > ti[i]) r = mid - 1; else l = mid;
             }
             if (l % 2 == 0) {
                 ans[i] = abs(R[x - l / 2] + ti[i]);
