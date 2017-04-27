@@ -11,7 +11,7 @@
 #include <fstream>
 
 using namespace std;
-int S = 49;
+int S = 50;
 class MazeConstruct {
     public:
     vector<string> construct(int k) {
@@ -21,23 +21,25 @@ class MazeConstruct {
             return vector<string>(n, string(m, '.'));
         }
         int m = S, n = S;//m+n-1=1+k
-        if (k%2 != 0) --m;
+        if (k&1) --m;
         int len = m + n - 2;
-        vector<string> A(n,string(m, '#'));
-        for (int i = 0; i < n; ++i) A[i][0] = '.';
-        for (int i = 0; i < m; ++i) A[n-1][i] = '.';
+        vector<string> res(n,string(m, '#'));
+        for (int i = 0; i < n; ++i) res[i][0] = '.';
+        for (int i = 0; i < m; ++i) res[n-1][i] = '.';
         int x = 1, y = 0;
         while (len < k) {
-            if (y + 1 > m) {
+            if (y + 1 >= m) {
                 x += 4;
                 y = 0;
             }
-            A[x][y] = '#';
-            A[x-1][y+1] = A[x][y+1] = A[x+1][y+1] = '.';
+            res[x][y] = '#';
+            res[x-1][y+1] = '.';
+            res[x][y+1] = '.';
+            res[x+1][y+1] = '.';
             len += 2;
             ++y;
         }
-        return A;
+        return res;
     }
 };
 
