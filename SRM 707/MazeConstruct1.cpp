@@ -11,33 +11,58 @@
 #include <fstream>
 
 using namespace std;
-int S = 49;
+
+int a[1002];
+int x[1002], y[1002],z[1002];
 class MazeConstruct {
     public:
     vector<string> construct(int k) {
-        if (k < S + S - 2) {
-            int m = min(S, k + 1);
-            int n = k + 1 - m + 1 ;
-            return vector<string>(n, string(m, '.'));
-        }
-        int m = S, n = S;//m+n-1=1+k
-        if (k%2 != 0) --m;
-        int len = m + n - 2;
-        vector<string> A(n,string(m, '#'));
-        for (int i = 0; i < n; ++i) A[i][0] = '.';
-        for (int i = 0; i < m; ++i) A[n-1][i] = '.';
-        int x = 1, y = 0;
-        while (len < k) {
-            if (y + 1 > m) {
-                x += 4;
-                y = 0;
+        for (int i = 2; i <= 50; i++) {
+            int t = (i + 1) * 2;
+            for (int j = 0;j <= 24; j++) {
+                if (i + t*j > 1001) break;
+                if (0 == a[i + t*j]) {
+                    a[i + t*j] = 1;
+                    x[i + t*j] = i;
+                    y[i + t*j] = j;
+                    z[i + t*j] = 0;
+                } else if (j < y[i + t*j]) {
+                    x[i + t*j] = i;
+                    y[i + t*j] = j;
+                    z[i + t*j] = 0;
+                }
             }
-            A[x][y] = '#';
-            A[x-1][y+1] = A[x][y+1] = A[x+1][y+1] = '.';
-            len += 2;
-            ++y;
         }
-        return A;
+        for (int i = 0; i <= 1001; i++) {
+            if (a[i] == 0) {
+                x[i] = x[i - 1];
+                y[i] = y[i - 1];
+                z[i] = z[i - 1] + 1;
+            }
+        }
+        /*for (int i = 0; i <= 1001; i ++) {
+            printf("\n%d:%d,", i, a[i]);
+            if (a[i] == 1) printf("x=%d,y=%d,z=%d", x[i], y[i],z[i]);
+            if (a[i] == 0) printf("x=%d,y=%d,z=%d", x[i], y[i],z[i]);
+        }
+        printf("\n");*/
+        vector<string>res;
+        if (k == 1) {
+            res.push_back(string(1, '.'));
+            return res;
+        }
+        ++k;
+        res.push_back(string(x[k], '.'));
+        for (int i = 0; i < y[k]; ++i) {
+            res.push_back(string(x[k] - 1, '#') + string(1, '.'));
+            res.push_back(string(x[k], '.'));
+            res.push_back(string(1, '.') + string(x[k] - 1, '#'));
+            res.push_back(string(x[k], '.'));
+        }
+        for (int i = 0; i < z[k]; ++i) {
+            res.push_back(string(x[k] - 1, '#') + string(1, '.'));
+        }
+        return res;
     }
 };
 
