@@ -20,7 +20,7 @@ struct node {
 const int N  = 50;
 bool cmp(node x, node y) {
     if (x.d != y.d) return x.d < y.d;
-    return 1;
+    return x.v < y.v;
 };
 class DAGConstruction {
     public:
