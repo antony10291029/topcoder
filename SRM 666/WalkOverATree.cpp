@@ -11,64 +11,32 @@
 #include <fstream>
 #include <map>
 
+#define SZ(X) (X.size())
+#define rep(i,n) for (int i = 0; i < (n); ++i)
+#define min(x, y) ((x) < (y)) ? (x) : (y)
 using namespace std;
-typedef long long ll;
-ll bit(int x) {
-    return 1ll << x;
-}
-const int M = 55;
-vector<int> g[M];
-const int MX = 100000000;
-int v[MX], step[MX], go[MX], ct[MX];
-map<int, int> S;
 class WalkOverATree {
     public:
 
     int maxNodesVisited(vector<int> parent, int L) {
-        cout << "L="<< L<<endl;
-        if (parent.size() == 0) {
-            return 1;
-        }
-        int n = parent.size() + 1;
-        for (int i = 0; i < n-1; ++i) {
-            int chi = i + 1;
-            int par = parent[i];
-            g[chi].push_back(par);
-            g[par].push_back(chi);
-        }
-        ll all = 0;
-        for (int i = 0; i < n; ++i) all |= bit(i);
-
-
-
-        int front = 0, tail = 0;
-        go[front] = bit(0); ct[front] = 1;
-        S[bit(0)] = 1;
-        step[front] = 0;
-        v[front++] = 0;
-        while (tail < front) {
-            int _bit = go[tail], _ct = ct[tail],  _v = v[tail], _step = step[tail++];
-            //cout << "_v=" << _v << ",_step=" << _step << ",_ct=" << _ct << ",tail=" << tail<<endl;
-            if (_step >= L) break;
-            for (int i = 0; i < g[_v].size(); ++i) {
-                int nxt = g[_v][i];
-                go[front] = (_bit | bit(nxt));
-                if ((_bit & bit(nxt)) == 0) ct[front] = _ct + 1; else ct[front] = _ct;
-                v[front] = nxt;
-                if (S[go[front]]!=0 && S[go[front]] < ct[front]) {cout<<"coutinue" << endl;continue;}
-                cout << "S[go[front]]=" << S[go[front]] << ",ct[front]=" << ct[front] << ",ok=" << (S[go[front]]!=0 && S[go[front]] < ct[front])<<endl;
-                S[go[front]]=ct[front];
-                step[front++] = _step + 1;
+        int deep = 0; 
+        rep(i,SZ(parent)) {
+            int cnt = 0;
+            int t = i+1;
+            while(t != 0) {
+                ++cnt;
+                t = parent[t-1];
             }
-            if (front % 10000000 == 0) cout << front<<endl;
+            if (cnt > deep) {
+                deep = cnt;
+            }
         }
-        int res = 0;
-        cout << front << endl;
-        for (int i = 0; i < front; ++i) if (ct[i] > res) {
-            res = ct[i];
+        if (L <= deep) {
+            return L + 1;
+        } else {
+            return min(SZ(parent) + 1, deep + 1 + (L - deep) / 2);
         }
-
-        return res;
+        
     }
 };
 
