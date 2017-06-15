@@ -10,46 +10,33 @@
 #include <typeinfo>
 #include <fstream>
 #include <map>
-using namespace std;
+
 #define SZ(X) (X.size())
 #define rep(i,n) for (int i = 0; i < (n); ++i)
 #define min(x, y) ((x) < (y)) ? (x) : (y)
-#define max(x, y) ((x) > (y)) ? (x) : (y)
-vector<int> adj[105];
-int sz[105], dp[105][105];
-int L, N;
-void dfs(int u) {
-    sz[u] = 1;
-    for (int v : adj[u]) {
-        dfs(v);
-        sz[u] += sz[v];
-    }
-    rep(i, L + 1) {
-        dp[u][i] = 1;
-        rep(j, L + 1) {
-            if (j > i) continue;
-            for (int v : adj[u]) {
-                int tmp = min(sz[u] - 1 - sz[v], (i - j) / 2) + 1;
-                if (j - 1 >= 0) tmp += dp[v][j - 1];
-                dp[u][i] = max(dp[u][i], tmp);
-            }
-
-        }
-    }
-}
 using namespace std;
 class WalkOverATree {
     public:
 
     int maxNodesVisited(vector<int> parent, int L) {
-        for (int i = 0; i < 105; ++i)adj[i].clear();memset(sz, 0, sizeof(sz)); memset(dp, 0, sizeof(dp));
-        ::L = L;
-        N = parent.size() + 1;
-        for (int i = 0; i < N - 1; i++) {
-            adj[parent[i]].push_back(i + 1);
+        int deep = 0; 
+        rep(i,SZ(parent)) {
+            int cnt = 0;
+            int t = i+1;
+            while(t != 0) {
+                ++cnt;
+                t = parent[t-1];
+            }
+            if (cnt > deep) {
+                deep = cnt;
+            }
         }
-        dfs(0);
-        return dp[0][L];
+        if (L <= deep) {
+            return L + 1;
+        } else {
+            return min(SZ(parent) + 1, deep + 1 + (L - deep) / 2);
+        }
+        
     }
 };
 
