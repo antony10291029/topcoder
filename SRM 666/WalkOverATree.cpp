@@ -42,7 +42,11 @@ class WalkOverATree {
     public:
 
     int maxNodesVisited(vector<int> parent, int L) {
-        for (int i = 0; i < 105; ++i)adj[i].clear();memset(sz, 0, sizeof(sz)); memset(dp, 0, sizeof(dp));
+        for (int i = 0; i < 105; ++i) {
+            adj[i].clear();
+        }
+        memset(sz, 0, sizeof(sz));
+        memset(dp, 0, sizeof(dp));
         ::L = L;
         N = parent.size() + 1;
         for (int i = 0; i < N - 1; i++) {
