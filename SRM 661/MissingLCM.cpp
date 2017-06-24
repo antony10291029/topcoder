@@ -15,7 +15,7 @@ using namespace std;
 int pr[MX];
 int to(int i, int N) {
     int val = i;
-    while (val * i <= N) {
+    while (1LL * val * i <= N) {
         val *= i;
     }
     return val;
@@ -28,9 +28,8 @@ class MissingLCM {
         for (int i = 2; i <= N; ++i) {
             if (pr[i]) continue;
             int t = to(i, N);
-            res = max(res, (N / t + 1) * t);
-
-            for (int j = i * i; j <= N; j += i) {
+            res = max(res, 2 * t);
+            for (long long j = 1LL * i * i; j <= N; j += i) {
                 pr[j] = 1;
             }
         }
