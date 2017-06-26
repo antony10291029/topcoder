@@ -13,30 +13,43 @@
 using namespace std;
 const int MX = 2005;
 #define clr(x) memset(x, 0, sizeof(x))
-int f[MX];
+int f[MX*4], a[MX];
+void add(int idx, int val) {
+    ++idx;
+    for (int i = idx; i < MX; i += i&(-i)) f[i] += val;
+}
+int getValue(int idx) {
+    ++idx;
+    if (idx <= 0) return 0;
+    int sum = 0;
+    for (int i = idx; i > 0; i -= i&(-i)) sum += f[i];
+    return sum;
+}
+
 class ApplesAndOrangesEasy {
     public:
     int maximumApples(int N, int K, vector<int> info) {
-        clr(f);
+        clr(f);clr(a);
         for (int x : info) {
-            f[x-1] = 1;
+            add(x - 1, 1);
+            a[x-1] = 1;
         }
         for (int i = 0; i < N; ++i) {
-            if (f[i]) continue;
-            f[i] = 1;
-            int sum = 0, ok = true;
-            for (int j = 0; j < N; j++) {
-                sum += f[j];
-                if (j - K >= 0) sum -= f[j - K];
-                if (sum > K / 2) {
+            if (a[i]) continue;
+            add(i, 1), a[i] = 1;
+            int ok = true;
+            for (int j = i; j < i + K; j++) {
+                int tmp = getValue(j);
+                if (j - K >= 0) tmp -= getValue(j - K);
+                if (tmp > K / 2) {
                     ok = false;
                     break;
                 }
             }
-            if (!ok) f[i] = 0;
+            if (!ok) add(i, -1), a[i] = 0;
         }
         int res = 0;
-        for (int i = 0; i < N; ++i) res += f[i];
+        for (int i = 0; i < N; ++i) res += a[i];
         return res;
     }
 };
