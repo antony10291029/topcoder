@@ -33,7 +33,7 @@ class ScoresSequence {
             int cnt = 0;
             rep(i,n) if (!vis[i]) q[cnt++] = i;
             sort(q, q+cnt,[&](int a,int b) { return s[a]>s[b]; });
-            int wcnt = n - 1 - step - s[k];
+            int wcnt = cnt - s[k];
             rep(i,wcnt) g[q[i]][k] = true, --s[q[i]];
             per(i,wcnt,cnt) g[k][q[i]] = true;
         }
