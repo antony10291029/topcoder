@@ -3,7 +3,36 @@ import java.util.*;
 
 public class DengklekGaneshAndChains {
 	public String getBestChains(String[] chains, int[] lengths) {
-		return "";
+        for (int i = 0; i < chains.length; ++i) {
+            String best = chains[i];
+            for (int start = 1; start < chains[i].length(); ++start) {
+                String nextOne = chains[i].substring(start) + chains[i].substring(0, start);
+                if (nextOne.compareTo(best) > 0) {
+                    best = nextOne;
+                }
+            }
+            chains[i] = best;
+        }
+        Arrays.sort(chains);
+        boolean[] used = new boolean[chains.length];
+        StringBuilder res = new StringBuilder();
+        for (int l : lengths) {
+            String choose = null;
+            for (int i = chains.length - 1; i >= 0; --i) {
+                if (!used[i]) {
+                    choose = chains[i].substring(0, l);
+                    break;
+                }
+            }
+            res.append(choose);
+            for (int i = 0; i < chains.length; ++i) {
+                if (!used[i] && chains[i].startsWith(choose)) {
+                    used[i] = true;
+                    break;
+                }
+            }
+        }
+		return res.toString();
 	}
 
 // CUT begin
