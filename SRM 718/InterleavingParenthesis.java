@@ -3,38 +3,34 @@ import java.util.*;
 
 public class InterleavingParenthesis {
     private static int MOD = 1000_000_007;
-    int[][][] dp;
-    String x, y;
-    public int f(int a, int b, int sum) {
-        if (a >= x.length() && b >= y.length()) {
-            if (sum == 0) return 1;
-            return 0;
-        }
-        if (dp[a][b][sum] >= 0) return dp[a][b][sum];
-        int s = 0;
-        if (a < x.length()) {
-            if (x.charAt(a) == '(') s = (s + f(a + 1, b, sum + 1)) % MOD;
-            else if (sum > 0) s = (s + f(a + 1, b, sum - 1)) % MOD;
-        }
-        if (b < y.length()) {
-            if (y.charAt(b) == '(') s = (s + f(a, b + 1, sum + 1)) % MOD;
-            else if (sum > 0) s = (s + f(a, b + 1, sum - 1)) % MOD;
-        }
-        dp[a][b][sum] = s;
-        return s;
-    }
+    int[][] dp;
 	public int countWays(String s1, String s2) {
-        x = s1;
-        y = s2;
-        dp = new int[s1.length() + 1][s2.length() + 1][s1.length() + s2.length() + 1];
+        int n = s1.length();
+        int m = s2.length();
+        dp = new int[s1.length() + 1][s2.length() + 1];
+        int[] a = new int[s1.length() + 1];
+        int[] b = new int[s2.length() + 1];
+        for (int i = 1; i < s1.length() + 1; ++i) {
+            if (s1.charAt(i - 1) == '(') a[i] = a[i - 1] + 1;
+            else a[i] = a[i - 1] - 1;
+        }
+        for (int i = 1; i < s2.length() + 1; ++i) {
+            if (s2.charAt(i - 1) == '(') b[i] = b[i - 1] + 1;
+            else b[i] = b[i - 1] - 1;
+        }
+        dp[0][0] = 1;
         for (int i = 0; i < s1.length() + 1; ++i) {
             for (int j = 0; j < s2.length() + 1; ++j) {
-                for (int k = 0; k < s1.length() + s2.length() + 1; ++k) {
-                    dp[i][j][k] = -1;
+                if (i == 0 && j == 0) {
+                    continue;
                 }
+                dp[i][j] = 0;
+                if (a[i] + b[j] < 0) continue;
+                if (i > 0) dp[i][j] = dp[i-1][j];
+                if (j > 0) dp[i][j] = (dp[i][j] + dp[i][j-1]) % MOD;
             }
         }
-		return f(0, 0, 0);
+		return dp[n][m];
 	}
 
 // CUT begin
