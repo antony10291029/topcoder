@@ -2,8 +2,53 @@ import java.io.*;
 import java.util.*;
 
 public class RobotOnMoon {
+    private static final int[] dx = new int[]{1, 0, -1, 0};
+    private static final int[] dy = new int[]{0, -1, 0, 1};
+    private int r, c;
+    private int sx, sy;
+    private String[] g;
+    private boolean in(int x, int y) {
+        return x >= 0 && x < r && y >= 0 && y < c;
+    }
+    private int check(int dir) {
+        int curX = sx;
+        int curY = sy;
+        int len = 0;
+        while (true) {
+            int nX = curX + dx[dir];
+            int nY = curY + dy[dir];
+            if (!in(nX, nY)) {
+                break;
+            }
+            if (g[nX].charAt(nY) == '#') {
+                return -1;
+            }
+            ++len;
+            curX = nX;
+            curY = nY;
+        }
+        return len;
+    }
 	public int longestSafeCommand(String[] board) {
-		return 0;
+        r = board.length;
+        c = board[0].length();
+        g = board;
+        for (int i = 0; i < r; ++i) for (int j = 0; j < c; ++j) {
+            if (g[i].charAt(j) == 'S') {
+                sx = i;
+                sy = j;
+            }
+        }
+        int res[] = new int[2];
+        for (int dir = 0; dir < 2; dir++) {
+            int len1 = check(dir);
+            int len2 = check(dir + 2);
+            if (len1 == -1 || len2 == -1) {
+                return -1;
+            }
+            res[dir] = Math.max(res[dir], len1 + len2);
+        }
+		return res[0] + res[1];
 	}
 
 // CUT begin
