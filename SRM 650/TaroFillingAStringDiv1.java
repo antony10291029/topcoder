@@ -2,8 +2,33 @@ import java.io.*;
 import java.util.*;
 
 public class TaroFillingAStringDiv1 {
+    final int MOD = 1000000007;
+
 	public int getNumber(int N, int[] position, String value) {
-		return 0;
+        int n = position.length;
+        boolean[] color = new boolean[n];
+        for (int i = 0; i < n; ++i) {
+            if (value.charAt(i) == 'A') color[i] = false;
+            else color[i] = true;
+        }
+        for (int i = 0; i < n; ++i) {
+            int pos = i;
+            for (int j = i + 1; j < n; ++j) {
+                if (position[j] < position[pos]) pos = j;
+            }
+            int tmp = position[i]; position[i] = position[pos]; position[pos] = tmp;
+            boolean tmp1 = color[i]; color[i] = color[pos]; color[pos] = tmp1;
+        }
+        long res = 1;
+        for (int i = 1; i < n; ++i) {
+            int cnt = position[i] - position[i - 1] - 1;
+            if (color[i] == color[i - 1]) {
+                if (cnt % 2 == 0) res = (res * (cnt + 1)) % MOD;
+            } else {
+                if (cnt % 2 == 1) res = (res * (cnt + 1)) % MOD;
+            }
+        }
+		return (int) res;
 	}
 
 // CUT begin
