@@ -3,7 +3,7 @@
 <html>
 <head>
     <meta charset="utf-8" />
-    <title>TopCoder TCO17 Beijing - 250: EllysBottles</title>
+    <title>TopCoder TCO17 Beijing - 500: Ellys8Bit</title>
     
     <link type="image/x-icon" rel="shortcut icon" href="http://www.topcoder.com/i/favicon.ico"/>
     
@@ -215,8 +215,8 @@ li.testcase .data {
     <h1 class="heading">
         <span id='contest-name'>TCO17 Beijing</span>
         <span id='contest-division'>1</span>
-        <span id='problem-score'>250</span>
-        <span id='problem-name'>EllysBottles</span>
+        <span id='problem-score'>500</span>
+        <span id='problem-name'>Ellys8Bit</span>
     </h1>
 
     <hr />
@@ -225,13 +225,16 @@ li.testcase .data {
     <div class="section">
         <h2 class="section-title">Problem Statement</h2>
         <div class="problem-intro">
-            <intro escaped="1">There are a few minutes left before the start of a SRM. While waiting, Elly entertains herself in the following way: In front of her she has several bottles of the same capacity, containing various amount of water.<br />
-She finds two bottles: one that contains the largest amount of water and one that contains the smallest amount of water. She then pours water from the first bottle she found into the second bottle she found until they both contain the same amount of water.<br />
-After that she again looks at all the bottles, finding the most filled one and the least filled one and does this procedure again. Elly performs the above procedure exactly <b>k</b> times. Then the SRM starts and she switches to solving problems instead.
-<br />
-<br />
-The initial amount of liquid in each of the bottles is provided to you in the <type>int[]</type> <b>bottles</b>. Can you calculate what is the amount of water in the least filled bottle, after executing the described procedure <b>k</b> times?
-</intro>
+            <intro escaped="1">&quot;Pravetz&quot; is a well-known brand of computers in Bulgaria, as the company used to manufacture all 8-bit computers in the country during the socialism. Suddenly, after a 20-year pause from being on the market, they released a modern, 64-bit laptop. 
+<br /><br />
+
+Elly recently bought such a laptop and now her mother is confused. How can an 8-bit computer be also 64-bit!? Elly, always being pain in the assembler, decided to joke with her by coming up with the following definition: &quot;A 64-bit 8-bit number with at most 64 bits in its binary representation, which has exactly 8 bits set. (I.e., out of the 64 bits there are exactly eight 1s.)&quot;. By this definition, the first few such numbers are 255, 383, 447, 479, etc.
+<br /><br />
+
+Elly told her mother that, in order to be in line with the new technologies, she has to be able to calculate these numbers by heart. To her surprise, she actually started doing so. Now the girl wants to check whether her calculations are correct.
+<br /><br />
+
+Your task is simple: given an <type>int</type> <b>N</b>, return the <b>N</b>-th 64-bit 8-bit number.</intro>
         </div>
     </div>
     
@@ -243,32 +246,30 @@ The initial amount of liquid in each of the bottles is provided to you in the <t
             <ul class="problem-definition-lines">
                 <li class="definition-line" id='class-line'>
                     <span class='definition-name'>Class</span>
-                    <span class='definition-value'>EllysBottles</span>
+                    <span class='definition-value'>Ellys8Bit</span>
                 </li>
                 <li class="definition-line" id='method-line'>
                     <span class='definition-name'>Method</span>
-                    <span class='definition-value'>getVolume</span>
+                    <span class='definition-value'>getNumber</span>
                 </li>
                 <li class="definition-line" id='parameters-line'>
                     <span class='definition-name'>Parameters</span>
                     <span class='definition-value'>
                     
-                        tuple(integer)
-                    , 
-                        integer
+                        int
                     
                     </span>
                 </li>
                 <li class="definition-line" id='returns-line'>
                     <span class='definition-name'>Returns</span>
                     <span class='definition-value'>
-                        float
+                        long long
                     </span>
                 </li>
                 <li class="definition-line" id='signature-line'>
                     <span class='definition-name'>Method signature</span>
                     <span class='definition-value'>
-                        def getVolume(self, bottles, k)
+                        long long getNumber(int N)
                     </span>
                 </li>
             </ul>
@@ -295,29 +296,13 @@ The initial amount of liquid in each of the bottles is provided to you in the <t
     </div>
 
     
-    <!-- Notes -->
-    <div class="section">
-        <h2 class="section-title">Notes</h2>
-        <ul class="notes">
-        
-            <li><note escaped="1">Your return value must have an absolute or a relative error smaller than 1e-9.</note></li>
-        
-            <li><note escaped="1">If there are multiple choices for the most-filled or least-filled bottles, Elly chooses any of them. This does not influence the final answer.</note></li>
-        
-        </ul>
-    </div>
-    
     
     <!-- Constraints -->
     <div class="section">
         <h2 class="section-title">Constraints</h2>
         <ul class="constraints">
         
-            <li><user-constraint escaped="1"><b>k</b> will be between 1 and 1,000,000,000, inclusive.</user-constraint></li>
-        
-            <li><user-constraint escaped="1"><b>bottles</b> will contain between 2 and 50 elements, inclusive.</user-constraint></li>
-        
-            <li><user-constraint escaped="1">Each element in <b>bottles</b> will be between 0 and 1,000,000,000, inclusive.</user-constraint></li>
+            <li><user-constraint escaped="1"><b>N</b> will be between 1 and 1,000,000,000, inclusive.</user-constraint></li>
         
         </ul>
     </div>
@@ -334,19 +319,10 @@ The initial amount of liquid in each of the bottles is provided to you in the <t
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">bottles</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 42, 13, 17, 7, 22 }
-                                
-                                </span>
-                            </li>
-                        
-                            <li class="variable data">
-                                <span class="name data">k</span>
-                                <span class="value data">
-                                
-                                    8
+                                    1
                                 
                                 </span>
                             </li>
@@ -358,25 +334,14 @@ The initial amount of liquid in each of the bottles is provided to you in the <t
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            20.0625
+                            255
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">Elly has five bottles, initially filled with 42, 13, 17, 7, and 22 units of water. She does her procedure eight times.
-<ol>
-    <li>She pours from a bottle containing 42 into a bottle containing 7 units of water, making the amount of water in the bottles {24.5, 13, 17, 24.5, 22}</li>
-    <li>She pours from a bottle containing 24.5 into a bottle containing 13 units of water, making the amount of water in the bottles {18.75, 18.75, 17, 24.5, 22}</li>
-    <li>She pours from a bottle containing 24.5 into a bottle containing 17 units of water, making the amount of water in the bottles {18.75, 18.75, 20.75, 20.75, 22}</li>
-    <li>She pours from a bottle containing 22 into a bottle containing 18.75 units of water, making the amount of water in the bottles {20.375, 18.75, 20.75, 20.75, 20.375}</li>
-    <li>She pours from a bottle containing 20.75 into a bottle containing 18.75 units of water, making the amount of water in the bottles {20.375, 19.75, 19.75, 20.75, 20.375}</li>
-    <li>She pours from a bottle containing 20.75 into a bottle containing 19.75 units of water, making the amount of water in the bottles {20.375, 20.25, 19.75, 20.25, 20.375}</li>
-    <li>She pours from a bottle containing 20.375 into a bottle containing 19.75 units of water, making the amount of water in the bottles {20.0625, 20.25, 20.0625, 20.25, 20.375}</li>
-    <li>She pours from a bottle containing 20.375 into a bottle containing 20.0625 units of water, making the amount of water in the bottles {20.21875, 20.25, 20.0625, 20.25, 20.21875}</li>
-</ol>
-The lowest amount of water in any of the bottles after the transactions is 20.0625.</div>
+                        <div class="testcase-comment">The first 64-bit 8-bit number is just the binary number 11111111, which is 255 in decimal.</div>
                     </div>
                     
                
@@ -390,19 +355,10 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">bottles</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 42, 42, 42 }
-                                
-                                </span>
-                            </li>
-                        
-                            <li class="variable data">
-                                <span class="name data">k</span>
-                                <span class="value data">
-                                
-                                    42
+                                    2
                                 
                                 </span>
                             </li>
@@ -414,14 +370,14 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            42.0
+                            383
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">In each of the 42 operations Elly chooses two bottles with 42 units of water and basically does nothing.</div>
+                        <div class="testcase-comment">The second 64-bit 8-bit number is 101111111, which is 383 in decimal.</div>
                     </div>
                     
                
@@ -435,19 +391,10 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">bottles</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 1111111, 2222222, 3333333, 4444444, 5555555, 6666666, 7777777, 8888888, 9999999 }
-                                
-                                </span>
-                            </li>
-                        
-                            <li class="variable data">
-                                <span class="name data">k</span>
-                                <span class="value data">
-                                
-                                    4
+                                    3
                                 
                                 </span>
                             </li>
@@ -459,14 +406,14 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            5555555.0
+                            447
                         
                         </span>
                     </div>
                     
                     <div class="testcase-annotation">
                         <div class='tag'>note</div>
-                        <div class="testcase-comment">After the last operation all bottles end up containing the same amount of water: 5555555.</div>
+                        <div class="testcase-comment">The third 64-bit 8-bit number is 110111111, which is 447 in decimal.</div>
                     </div>
                     
                
@@ -480,19 +427,10 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">bottles</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 937831252, 223252363, 706118333, 954711869, 819583497, 520873195, 879422756, 464831418, 156067240, 646868794, 894534170, 23380905, 855234472, 319560027, 305097549, 374217481, 86837363, 718892301, 952809474, 558293585, 91833518, 862607400, 982038771, 942620013, 507984782, 546527456, 615697673, 237645185, 53645793, 780959476, 136257699, 969658933, 959150775, 43875123, 9012, 349823412, 85123543, 349085123, 194357213, 229834565 }
-                                
-                                </span>
-                            </li>
-                        
-                            <li class="variable data">
-                                <span class="name data">k</span>
-                                <span class="value data">
-                                
-                                    1234567
+                                    1000
                                 
                                 </span>
                             </li>
@@ -504,7 +442,43 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            5.08428837725E8
+                            7032
+                        
+                        </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">The thousandth 64-bit 8-bit number is 1101101111000, which is 7032 in decimal.</div>
+                    </div>
+                    
+               
+                </div>
+            </li>
+            
+            <li class="testcase">
+                <div class="testcase-content">
+                    <div class="testcase-input">
+                        <div class='tag'>input</div>
+                        <ul class="variables">
+                        
+                            <li class="variable data">
+                                <span class="name data">N</span>
+                                <span class="value data">
+                                
+                                    133742
+                                
+                                </span>
+                            </li>
+                        
+                        </ul>
+                    </div>
+                    <div class="testcase-output">
+                        <div class='tag'>output</div>
+                        <span class="prefix data">Returns</span>
+                        <span class="value data">
+                        
+                            1087088
                         
                         </span>
                     </div>
@@ -520,19 +494,10 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <ul class="variables">
                         
                             <li class="variable data">
-                                <span class="name data">bottles</span>
+                                <span class="name data">N</span>
                                 <span class="value data">
                                 
-                                    { 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1, 0, 1 }
-                                
-                                </span>
-                            </li>
-                        
-                            <li class="variable data">
-                                <span class="name data">k</span>
-                                <span class="value data">
-                                
-                                    1000000000
+                                    537655880
                                 
                                 </span>
                             </li>
@@ -544,9 +509,14 @@ The lowest amount of water in any of the bottles after the transactions is 20.06
                         <span class="prefix data">Returns</span>
                         <span class="value data">
                         
-                            0.5
+                            1125899983585796
                         
                         </span>
+                    </div>
+                    
+                    <div class="testcase-annotation">
+                        <div class='tag'>note</div>
+                        <div class="testcase-comment">Watch out for overflows!</div>
                     </div>
                     
                
