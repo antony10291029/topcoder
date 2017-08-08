@@ -1,0 +1,63 @@
+-- Example 0
+2
+YN
+NN
+2
+YN
+NN
+2
+YN
+NN
+
+Possible
+-- Example 1
+2
+YN
+NY
+2
+YN
+NY
+2
+YN
+NY
+
+Impossible
+-- Example 2
+3
+YYY
+YNY
+YYY
+3
+YYY
+YNY
+YYY
+3
+YYY
+YNY
+YYY
+
+Possible
+-- Example 3
+3
+YYY
+YNY
+YYY
+3
+NYY
+YNY
+YYY
+3
+YYY
+YNY
+YYN
+
+Impossible
+-- Example 4
+1
+N
+1
+N
+1
+N
+
+Possible
