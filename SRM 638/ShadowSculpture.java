@@ -2,8 +2,79 @@ import java.io.*;
 import java.util.*;
 
 public class ShadowSculpture {
+    private int n;
+    private String[] XY;
+    private String[] YZ;
+    private String[] ZX;
+    private int[] dx = {1, 0, 0, 0, 0, -1}; 
+    private int[] dy = {0, 1, 0, -1, 0, 0}; 
+    private int[] dz = {0, 0, -1, 0, 1, 0}; 
+    boolean check(int x, int y, int z) {
+        if (x < 0 || x >= n) return false;
+        if (y < 0 || y >= n) return false;
+        if (z < 0 || z >= n) return false;
+        if (XY[x].charAt(y) == 'N') return false;
+        if (YZ[y].charAt(z) == 'N') return false;
+        if (ZX[z].charAt(x) == 'N') return false;
+        return true;
+
+    }
 	public String possible(String[] XY, String[] YZ, String[] ZX) {
-		return "";
+        n = XY.length;
+        this.XY = XY;
+        this.YZ = YZ;
+        this.ZX = ZX;
+        boolean flag = false;
+        for (int i = 0; i < n; ++i) for (int j = 0; j < n; ++j) {
+            if (XY[i].charAt(j) == 'Y') flag = true;
+            if (YZ[i].charAt(j) == 'Y') flag = true;
+            if (ZX[i].charAt(j) == 'Y') flag = true;
+        }
+        if (!flag) return "Possible";
+        for (int x = 0; x < n; ++x) for (int y = 0; y < n; ++y) for (int z = 0; z < n; ++z) if (check(x, y, z)) {
+            ArrayDeque<Integer>Q = new ArrayDeque<Integer>();
+            Q.add(x);
+            Q.add(y);
+            Q.add(z);
+            boolean[][][] used = new boolean[n][n][n];
+            used[x][y][z] = true;
+            while (Q.size() > 0) {
+                int cx = Q.remove();
+                int cy = Q.remove();
+                int cz = Q.remove();
+                for (int dir = 0; dir < 6; ++dir) {
+                    int nx = cx + dx[dir];
+                    int ny = cy + dy[dir];
+                    int nz = cz + dz[dir];
+                    if (check(nx, ny, nz) && !used[nx][ny][nz]) {
+                        used[nx][ny][nz] = true;
+                        Q.add(nx);
+                        Q.add(ny);
+                        Q.add(nz);
+                    }
+                }
+            }
+            boolean possible = true;
+            for (int i = 0; i < n; ++i) for (int j = 0; j < n; ++j) {
+                if (XY[i].charAt(j) == 'Y') {
+                    boolean ok = false;
+                    for (int k = 0; k < n; ++k) if (used[i][j][k]) ok = true;
+                    if (!ok) possible = false;
+                }
+                if (YZ[i].charAt(j) == 'Y') {
+                    boolean ok = false;
+                    for (int k = 0; k < n; ++k) if (used[k][i][j]) ok = true;
+                    if (!ok) possible = false;
+                }
+                if (ZX[i].charAt(j) == 'Y') {
+                    boolean ok = false;
+                    for (int k = 0; k < n; ++k) if (used[j][k][i]) ok = true;
+                    if (!ok) possible = false;
+                }
+            }
+            if (possible) return "Possible";
+        }
+		return "Impossible";
 	}
 
 // CUT begin

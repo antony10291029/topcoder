@@ -41,7 +41,6 @@ class ShadowSculpture {
         int dz[6] = {0, 0, 0, 0, 1, -1};
         n = XY.size();
         REP(sx, n) REP(sy, n) REP(sz, n) if(check(sx, sy, sz)) {
-            //cout << sx << " " << sy << " " << sz << endl;
             queue<int> qx, qy, qz;
             qx.push(sx);
             qy.push(sy);
@@ -67,7 +66,6 @@ class ShadowSculpture {
                     }
                 }
             }
-            //REP(x, n) REP(y, n) REP(z, n) printf("(%d, %d, %d) %d\n", x, y, z, used[x][y][z]);
  
             bool XYB[10][10] = {};
             bool YZB[10][10] = {};
@@ -84,15 +82,13 @@ class ShadowSculpture {
             REP(z, n)REP(x, n) if(ZX[z][x] == 'Y' && !ZXB[z][x]) ok = false;
             if(ok) return "Possible";
         }
- 
-        bool XYB[10][10] = {};
-        bool YZB[10][10] = {};
-        bool ZXB[10][10] = {};
+        //ALL IS N
         bool ok = true;
-        REP(x, n)REP(y, n) if(XY[x][y] == 'Y' && !XYB[x][y]) ok = false;
-        REP(y, n)REP(z, n) if(YZ[y][z] == 'Y' && !YZB[y][z]) ok = false;
-        REP(z, n)REP(x, n) if(ZX[z][x] == 'Y' && !ZXB[z][x]) ok = false;
-        if(ok) return "Possible";
+        REP(x, n)REP(y, n) if(XY[x][y] == 'Y') ok = false;
+        REP(y, n)REP(z, n) if(YZ[y][z] == 'Y') ok = false;
+        REP(z, n)REP(x, n) if(ZX[z][x] == 'Y') ok = false;
+        if (ok) return "Possible";
+ 
         return "Impossible";
     }
 };
