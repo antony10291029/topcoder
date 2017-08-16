@@ -10,7 +10,10 @@ public class ShoppingSurveyDiv1 {
         while (total > small * (K - 1)) {
             ++res;//MUST GET ONE
             --small;
-            for (int i = 0; i < s.length; ++i) if (s[i] > 0) {--s[i];--total;}//GET ALL TYPE ITEM
+            for (int i = 0; i < s.length; ++i) if (s[i] > 0) {//GET ALL TYPE ITEM
+                --s[i];
+                --total;
+            }
         }
 		return res;
 	}
